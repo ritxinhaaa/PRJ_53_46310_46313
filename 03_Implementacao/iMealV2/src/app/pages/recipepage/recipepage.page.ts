@@ -234,7 +234,7 @@ export class RecipepagePage implements OnInit {
   ////// Handle shopping list function
   handleShoppinglist() {
     this.addShoppinglist = true;
-    console.log(this.addShoppinglist);
+    alert("Recipe was added to your shopping list");
   }
 
 

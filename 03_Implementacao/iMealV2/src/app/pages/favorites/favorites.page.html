@@ -11,23 +11,32 @@
         <ion-row *ngIf="this.favoriteRecipes.length !== 0; else alt_message">
             <ion-col *ngFor="let recipe of favoriteRecipes">
 
-                <ion-card (click)="clickRecipe(recipe.get('id'))">
-                    <div class="ion-text-center">
-                        <img src="assets/imgs/diet_example.jpg" style="width: 80%; height: 80%; border-radius: 10% !important">
+                <ion-card class="main-card" (click)="clickRecipe(recipe.id)">
+                    <div class="ion-text-center card-image-blk">
+                        <img class="card-img" src="{{recipe.images[0]}}" style="width: 6rem; height: 6rem; border-radius: 10% !important;">
                     </div> 
 
-                    <ion-card-header>
+                    <ion-card-header style="padding-top: 2.5em;">
                         <ion-card-title class="card-title subtitle-font">{{recipe.title}}</ion-card-title>
                     </ion-card-header>
 
-                    <ion-card-content class="card-content subtitle-font">{{(recipe.description.length > 50)? (recipe.description | slice:0:50)+'...':(recipe.description)}}</ion-card-content>                    
+                    <ion-card-content class="card-content subtitle-font">{{(recipe.description.length > 35)? (recipe.description | slice:0:35)+'...':(recipe.description)}}</ion-card-content>                    
+
+                    <div>
+                        <div style="margin-left: 10%;">
+                            <ion-icon *ngFor="let num of[1,2,3,4,5]" [name]="recipe.rating < num ? 'star-outline' : 'star'">
+                            </ion-icon>
+                        </div>
+                    </div>
                 </ion-card>
             </ion-col>
         </ion-row>
 
         <ng-template #alt_message>
-            <p> Looks like you dont have any favorite recipes yet! </p>
-            <p> Go ahead and favorite some! </p>
+            <p class="ion-text-center" style="justify-content: center; display: flex; font-family: Abel; margin: 3rem 0 0 0;">
+                Looks like you don't have any favorite recipes yet! <br>
+                Go ahead and favorite some!
+            </p>
         </ng-template>
 
 
@@ -39,23 +48,23 @@
         <ion-tabs>
             <ion-tab-bar slot="bottom">
                 <ion-tab-button routerLink="/homepage">
-                    <ion-icon style="width: 30%;" name="home"></ion-icon>
+                    <ion-icon style="width: 37%;" name="home"></ion-icon>
                 </ion-tab-button>
 
                 <ion-tab-button>
-                    <ion-icon style="width: 30%;" name="heart" color="success"></ion-icon>
+                    <ion-icon style="width: 37%;" name="heart" color="success"></ion-icon>
                 </ion-tab-button>
 
                 <ion-fab-button style="margin: auto;" routerLink="/addrecipe" color="danger">
                     <ion-icon name="add"></ion-icon>
                 </ion-fab-button>
 
-                <ion-tab-button tab="notifications">
-                    <ion-icon style="width: 30%;" name="notifications-outline"></ion-icon>
+                <ion-tab-button>
+                    <ion-icon style="width: 37%;" name="notifications-outline"></ion-icon>
                 </ion-tab-button>
 
-                <ion-tab-button tab="shoppinglist">
-                    <ion-icon style="width: 30%;" name="cart-outline"></ion-icon>
+                <ion-tab-button routerLink="/shoppinglist">
+                    <ion-icon style="width: 37%;" name="cart-outline"></ion-icon>
                 </ion-tab-button>
             </ion-tab-bar>
         </ion-tabs>

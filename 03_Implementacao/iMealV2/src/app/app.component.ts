@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AlertController, Platform } from '@ionic/angular';
 import { AuthServices } from './services/auth/auth.page';
@@ -13,6 +14,7 @@ import { Session } from './services/variables/variables.page';
 export class AppComponent {
 
   constructor(
+    private route: Router,
     private session: Session,
     private authServices: AuthServices,
     private dbServices: DatabaseServices) {
