@@ -28,7 +28,11 @@ export class RegisterPage implements OnInit {
     let password = this.form.get('password').value;
     let confirmPassword = this.form.get('confirmPassword').value;
 
-    return (password == confirmPassword && password.length > 6);
+    console.log(password);
+    console.log(confirmPassword);
+    console.log(password.length >= 6);
+
+    return (password == confirmPassword && password.length >= 6);
   }
 
   register() {
@@ -36,10 +40,10 @@ export class RegisterPage implements OnInit {
     let email = this.form.get('email').value;
     let password = this.form.get('password').value;
 
-    if(this.authServices.register(name, email, password)) { 
-      console.log("Registry worked");
+    this.authServices.register(name, email, password).then(() => {
+      console.log("I registered you ;)");
       this.router.navigate(['login']);
-    }
+    })
   }
 
   checkForm(){

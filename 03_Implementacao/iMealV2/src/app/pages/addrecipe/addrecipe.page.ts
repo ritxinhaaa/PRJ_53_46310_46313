@@ -149,6 +149,9 @@ export class AddrecipePage implements OnInit {
 
     if(ingid != null) {
 
+      // if ingredient was already added
+      if(this.inglistIds.includes(ingid)) return;
+
       console.log(ingid);
       console.log(ingunit);
 
@@ -283,13 +286,21 @@ export class AddrecipePage implements OnInit {
   // 
   ///// Handle navigate to recipepage
   navigateRecipepage() {
+
+    console.log("Tou no navigate recipe page");
+
+    // Senão é adicionada nenhuma página à receita
     if(this.recipeImages.length == 0) {
       this.dbServices.setrecipeImages(this.recipeid, this.imageedefaultUrl).then((response) => {
+        console.log("Eu meti a imagem default na base de dados");
         this.router.navigate(['homepage']);
       })  
     }
 
-    this.handleUploadimages(this.recipeid).then((response) => { this.router.navigate(['homepage']) })
+    // Se são adicionadas páginas à receita
+    this.handleUploadimages(this.recipeid).then((response) => {
+      console.log("Eu meti as imagens na base de dados");
+      this.router.navigate(['homepage']) })
   }
 
 }

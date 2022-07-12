@@ -61,6 +61,10 @@ export class EditrecipePage implements OnInit {
   unit = "";
   save = false;
 
+  // Input to select ingredients and units
+  inputIng;
+  inputUnit;
+
   // Handle images
   images64 = [];
   changedIndex = [null, null, null, null];
@@ -205,9 +209,11 @@ export class EditrecipePage implements OnInit {
     this.renderer.setAttribute(input,"id", idx.toString()+1);
     this.renderer.setAttribute(input, "value", instruction);
     this.renderer.setAttribute(input, "readOnly", "true");
+    this.renderer.setAttribute(input, "style", "font-family: Abel");
     this.renderer.addClass(input, "text");
 
     const cross = document.createElement("ion-icon");
+    this.renderer.setAttribute(cross, "style", "font-family: Abel");
     this.renderer.setAttribute(cross,"name","close")
     cross.addEventListener("click", () => {
       this.numberInstruction--;
@@ -277,6 +283,9 @@ export class EditrecipePage implements OnInit {
 
     if(ingid != null) {
 
+      // if ingredient was already added
+      if(this.inglistIds.includes(ingid)) return;
+
       console.log(ingid);
       console.log(ingunit);
 
@@ -309,6 +318,12 @@ export class EditrecipePage implements OnInit {
 
       p.appendChild(cross);
       div.appendChild(p);
+
+      this.inputIng = document.getElementById('ingredient');
+      this.inputIng.value = '';
+
+      this.inputUnit = document.getElementById('unit');
+      this.inputUnit.value = '';
     }
   }
   // Adiciona a instrução ao bloco onde o utilizador vê os ingredientes que já selecionou
@@ -330,9 +345,12 @@ export class EditrecipePage implements OnInit {
     const input = document.createElement("ion-input");
     this.renderer.setAttribute(input,"id", this.numberInstruction.toString())
     this.renderer.setAttribute(input, "value", message)
+    this.renderer.setAttribute(input, "style", "font-family: Abel");
     this.renderer.addClass(input, "text");
 
     const cross = document.createElement("ion-icon");
+    this.renderer.setAttribute(cross, "style", "font-family: Abel");
+
     this.renderer.setAttribute(cross,"name","close")
     cross.addEventListener("click", () => {
       this.numberInstruction--;
@@ -462,7 +480,7 @@ export class EditrecipePage implements OnInit {
     this.saveChanges().then((response) => {
       console.log(response);
       console.log("Im navigating to recipe page");
-      // this.router.navigate(['recipepage', this.session.recipeid]);
+      this.router.navigate(['recipepage', this.session.recipeid]);
     })
   }
 }

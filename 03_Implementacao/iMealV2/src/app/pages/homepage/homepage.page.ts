@@ -151,49 +151,56 @@ export class HomepagePage implements OnInit {
     const ingid = this.choosenIngredient;
     let ingname = "";
 
-    // console.log("I will add this ingredient " + ingid);
+    if(ingid != null) {
 
-    this.ingredientDatabase.forEach(element => {
-      if(element.id === ingid){
-        ingname = element.name;
-      }
-    });
+      // if ingredient was already added
+      if(this.searchIngredients.includes(ingid)) return;
 
-    this.searchIngredients.push(ingid);
-    this.searchIngredientsName.push(ingname);
-    const idx = this.searchIngredients.indexOf(ingid,0);
-
-    // Criar novo bloco com o nome do ingrediente
-    const div = document.getElementById("ing-container");
-
-    const p = document.getElementById("template").cloneNode();
-    this.renderer.removeAttribute(p, "hidden");
-    p.textContent = ingname;
-
-    const cross = document.createElement("ion-icon");
-    cross.setAttribute("name","close");
-    cross.addEventListener("click", () => {
-      this.searchIngredients.splice(idx,1);
-      this.searchIngredientsName.splice(idx,1);
-      div.removeChild(p);
-    });
-
-    p.appendChild(cross);
-    div.appendChild(p);
-
-    this.inputIng = document.getElementById('ingredient');
-    this.inputIng.value = '';
+      this.ingredientDatabase.forEach(element => {
+        if(element.id === ingid){
+          ingname = element.name;
+        }
+      });
+  
+      this.searchIngredients.push(ingid);
+      this.searchIngredientsName.push(ingname);
+      const idx = this.searchIngredients.indexOf(ingid,0);
+  
+      // Criar novo bloco com o nome do ingrediente
+      const div = document.getElementById("ing-container");
+  
+      const p = document.getElementById("template").cloneNode();
+      this.renderer.removeAttribute(p, "hidden");
+      p.textContent = ingname;
+  
+      const cross = document.createElement("ion-icon");
+      cross.setAttribute("name","close");
+      cross.addEventListener("click", () => {
+        this.searchIngredients.splice(idx,1);
+        this.searchIngredientsName.splice(idx,1);
+        div.removeChild(p);
+      });
+  
+      p.appendChild(cross);
+      div.appendChild(p);
+  
+      this.inputIng = document.getElementById('ingredient');
+      this.inputIng.value = '';
+    }
   }
 
 
   //
   ///// Handle apply filters
   applyFilter() {
+
     this.dbServices.getRecipesByFilter(this.searchIngredients, this.dietFilter, this.exclusiveSearch)
     .then((response) => {
       this.recipes = response;
+      console.log("Estou no applyFilter");
       console.log(this.recipes);
     })
+
   }
 
   //

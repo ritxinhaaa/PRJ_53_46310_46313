@@ -24,7 +24,7 @@
 
           <ion-grid class="ion-text-center">
             <!-- title -->
-            <!-- a margin-x foi colocada na tag h5, para não modificar o tamanho da row -->
+            <!-- a margin-x foi colocada na tag h5, para nÃ£o modificar o tamanho da row -->
             <ion-row style="justify-content: start !important;">
               <h5 class="margin-x subtitle-font">Choose Diet Type</h5>
             </ion-row>
@@ -145,7 +145,7 @@
                       </ion-select-option>
                     </ion-select>
 
-                    <ion-input formControlName="unit" [(ngModel)]="unit" placeholder="unit"></ion-input>
+                    <ion-input formControlName="unit" id="unit" [(ngModel)]="unit" style="padding-left: 3rem !important;" placeholder="unit"></ion-input>
                   </ion-item>
                 </ion-list>
 
@@ -155,7 +155,7 @@
                 </div>
 
                 <div>
-                  <ion-button class="button-font" (click)="addIng()">Add</ion-button>
+                  <ion-button color=success class="button-font" style="width: 30%;" (click)="addIng()">Add</ion-button>
                 </div>
               </div>
             </ion-row>
@@ -227,7 +227,7 @@
 
         <!-- row : submit button -->
         <ion-row>
-          <ion-button (click)="navigateRecipepage()" class="button-font" shape="round" color="secondary">Save changes</ion-button>
+          <ion-button (click)="navigateRecipepage()" class="button-font" style="margin: 1rem 0 1rem 0;" shape="round" color="secondary">Save changes</ion-button>
         </ion-row>
 
       </form>

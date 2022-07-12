@@ -56,7 +56,7 @@ export class AuthServices {
     })
   }
 
-
+  
   login(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.auth.signInWithEmailAndPassword(email,password)
@@ -82,8 +82,6 @@ export class AuthServices {
       })
     })
   }
-
-
 
   // Register using email and password
   register(username: string, email: string, password: string) {

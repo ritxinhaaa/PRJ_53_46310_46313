@@ -1,10 +1,6 @@
 import { Injectable, Query } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AngularFireDatabase, snapshotChanges } from '@angular/fire/compat/database';
-import { read } from 'fs';
-import { ErrorFactory } from '@firebase/util';
-import { resolve, resolveCname } from 'dns';
-import { rejects } from 'assert';
+import { snapshotChanges } from '@angular/fire/compat/database';
 
 
 @Injectable({
@@ -13,8 +9,7 @@ import { rejects } from 'assert';
 
 export class DatabaseServices {
 
-  constructor(
-    private firestore: AngularFirestore) {}
+  constructor( private firestore: AngularFirestore) {}
 
 
   ////////////////
@@ -165,6 +160,9 @@ export class DatabaseServices {
   getRecipe(recipeid: string) {
     return new Promise((resolve, reject) => {
       this.firestore.collection('recipes').doc(recipeid).get().toPromise().then((snapshot) => {
+
+        console.log(recipeid);
+        console.log(snapshot.data());
 
         let response =  {
           id: recipeid,
@@ -319,7 +317,7 @@ export class DatabaseServices {
     // Vamos buscar as receitas dos ingredientes da lista
     // nas receitas excluimos todas as que têm mais de dois ingredientes
     return new Promise((resolve, reject) => {
-      
+
       let filteredRecipeList = [];  // guarda só os ids repetidos
       let resultRecipelist = [];    // guarda as receitas selecionadas no final
       let recipeList = [];          // guarda todos os ids das receitas na lista de receitas de cada ingrediente
@@ -333,8 +331,6 @@ export class DatabaseServices {
           // Guardar todas as receitas de todos os ingredientes
           recipeList.push(...snapshot.data()['recipes']);
           idx++;
-
-          console.log(recipeList);
 
           // Se já fomos buscar as receitas de todos os ingredientes
           if(idx == ingSearchList.length) {
@@ -432,7 +428,7 @@ export class DatabaseServices {
       // Se só é usado o filtro por dietas
       else if(filterDiet) {
 
-        console.log("Vou pesquisar por ingrediente");
+        console.log("Vou pesquisar por dieta");
 
         this.getRecipesByDiet(dietType).then((response) => {
           dietResults = response; 

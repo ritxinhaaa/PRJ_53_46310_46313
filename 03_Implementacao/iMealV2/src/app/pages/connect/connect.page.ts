@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Session } from 'src/app/services/variables/variables.page';
 
 @Component({
   selector: 'app-connect',
@@ -7,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConnectPage implements OnInit {
 
-  constructor() {
-   }
+  constructor(private session: Session) {
+  }
 
   ngOnInit() {
   }
 
+  // fill() { this.session.readJson(); }
 }
