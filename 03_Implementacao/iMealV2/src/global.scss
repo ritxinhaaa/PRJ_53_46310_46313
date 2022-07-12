@@ -1,0 +1,58 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+/* Fonts */
+//@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=Rozha+One&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+/* Fonts */
+//@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=Rozha+One&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+@font-face {
+    font-family: 'DM Sans Bold';
+    src: url('assets/fonts/DMSans-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'DM Sans';
+    src: url('assets/fonts/DMSans-Regular.ttf');
+}
+
+/* CSS's used in the whole app */
+.title-font { font-family: DM Sans bold; }
+.subtitle-font { font-family: DM Sans; }
+.button-font { font-family: Open Sans; }
+
+//// CSS'S TO APPLY FOR ENTIRE APP
+ion-button { text-transform: none; --box-shadow:none;} // To prevent buttons text from showing in upper case
+ion-segment-button { text-transform: none; }

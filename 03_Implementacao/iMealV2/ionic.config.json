@@ -1,0 +1,7 @@
+{
+  "name": "iMealV2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

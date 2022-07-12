@@ -1,0 +1,147 @@
+ion-content{
+    --background: var(--ion-color-primary);
+}
+
+ion-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+ion-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+ion-button {
+    color: #34A853;
+}
+
+img {
+    border-radius: 10px !important;
+}
+
+ion-segment-button {
+    height: 40px;
+    min-height: 40px;
+    border-radius: 10px;
+    margin: -2px 0;
+}
+
+ion-segment {
+    background: white;
+    border-radius: 10px;
+}
+
+ion-popover {
+    --backdrop-opacity: 0.6;
+    --box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.6);
+    --color: white;
+    --width: 40%;
+    margin-top: 2%;
+}
+
+ion-popover::part(backdrop) {
+    background-color: rgba(255, 255, 255, 0.329);
+}
+
+
+ion-list.ing-inst-list {
+    background: var(--ion-color-primary) !important;
+    width: 100%;
+}
+
+ion-item.ing-inst-list {
+    background: rgba(0, 0, 0, 0) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+//// CSS Class
+
+.margin-y {
+    margin-top: 2.5em;
+    margin-bottom: 2.5em;
+}
+
+.margin-x {
+    margin-left: 2.5em;
+    margin-right: 2.5em;
+}
+
+.margin-comment {
+    width: 90%;
+    padding: 2%;
+}
+
+.margin-description {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.small-font {
+    font-size: smaller;
+}
+
+/*.buttons-toolbar {
+    border-radius: 10px;
+}*/
+
+.text-area {
+    font-family: Abel;
+    background-color: var(--ion-color-primary);
+    vertical-align: middle;
+    //padding-left: 0.8rem;
+    margin: 0.5rem 1rem 0.5rem 1rem;
+}
+
+
+//
+// comment section css
+.comment-title {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.comment-view {
+    width: 100%;
+    height: 18rem;
+    background-color: white;
+}
+
+.comment-img {
+    padding: 5%;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.comment-author {
+    justify-content: start !important;
+    font-size: smaller;
+}
+
+.comment-content {
+    justify-content: start !important;
+    font-size: smaller;
+}
+
+.profilePic {
+    height: 80%; 
+    width: 80%; 
+    border-radius: 6rem !important; 
+    z-index: 2;
+    border: 2px solid var(--ion-color-primary);
+    justify-content: right !important;
+}
+
+.separator {
+    height: 0.09rem;
+    background-color: lightgrey;
+    margin: 0 1rem 0 1rem;
+}
+
+.ionicon-stroke-width {
+    stroke-width: var(--ionicon-stroke-width, 15px);
+}

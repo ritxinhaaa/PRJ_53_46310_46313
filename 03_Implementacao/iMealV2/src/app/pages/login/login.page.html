@@ -1,0 +1,89 @@
+<ion-content [fullscreen]="true">
+  <ion-grid class="ion-text-center">
+
+    <!-- row : cancel button -->
+    <ion-row>
+      <ion-button class="skip-button" routerLink="/connect">Cancel</ion-button>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-grid class="ion-text-center">
+
+    <!-- row : app logo --> 
+    <ion-row>
+      <div id="container">
+        <ion-img style="width: 50px; height: 50px;" src="assets/imgs/imeal_logo_smaller.png"></ion-img>
+      </div>
+    </ion-row>
+
+    <!-- row : intro -->
+    <ion-row>
+      <h3 class="title title-font"> Login to your account </h3>
+    </ion-row>
+
+    <!-- row : intro-message -->
+    <ion-row>
+      <h5 class="text">Good to see you again, enter your details <br> below to continue sharing.</h5>
+    </ion-row>
+
+    <!-- Validation form : validate email and password fields -->
+    <form [formGroup]="form">
+
+      <!-- row : Email address -->
+      <ion-row class="margin-t-input" style="justify-content: start !important;">
+        <h6 class="input-title" id="input-title">Email address</h6>
+      </ion-row>
+      <ion-row>
+        <ion-item class="text-area-container">
+          <ion-input type="email" formControlName="email" class="text-area" id="email" placeholder="Enter email"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+          <!-- Email error messages -->
+          <ion-label style="margin-top: 1%;" class="text" color="danger" *ngIf="form.get('email').touched && form.get('email').errors?.required">Email is mandatory</ion-label>
+          <ion-label style="margin-top: 1%;" class="text" color="danger" *ngIf="form.get('email').touched && form.get('email').errors?.email">Email is invalid</ion-label>
+      </ion-row>
+
+      <!-- row : password -->
+      <ion-row class="margin-t-input" style="justify-content: start !important;">
+        <h6 class="input-title" id="input-title">Password</h6>
+      </ion-row>
+      <ion-row>
+        <ion-item class="text-area-container">
+          <ion-input type="password" formControlName="password" class="text-area" id="username" placeholder="Enter password"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <!-- Password error messages -->
+        <ion-label style="margin-top: 1%;" class="text" color="danger" *ngIf="form.get('password').touched && form.get('password').errors?.required">Password is mandatory</ion-label>
+      </ion-row>
+
+      <!-- row : login button -->
+      <ion-row class="margin-y2">
+        <ion-button (click)="login()" [disabled]="!form.valid" class="button-font" shape="round" color="secondary"> login </ion-button>
+      </ion-row>
+
+    </form>
+
+    <!-- row : separator -->
+    <!--<ion-row>
+      <hr style="margin-right: 5%;"> <p>or</p> <hr style="margin-left: 5%;">
+    </ion-row>-->
+
+    <!-- row : google button -->
+    <!--<ion-row class="margin-y3">
+      <ion-button (click)="googleLogin()" class="button-font" style="height: 3.5em;" shape="round" color="light"> 
+        --><!-- Advanced: explicity set the icon for each platform -->
+        <!--<ion-icon style="margin-right: 4%;" ios="logo-google" md="logo-google"></ion-icon>
+        Sign-in with Google
+      </ion-button>
+    </ion-row>-->
+
+    <!-- row : skip button -->
+    <ion-row class="forgotButton">
+      <ion-button class="forgot-button" routerLink="/forgotpassword"><h6>Forgot my password</h6></ion-button>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

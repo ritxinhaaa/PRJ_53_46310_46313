@@ -1,0 +1,105 @@
+<ion-content [fullscreen]="true">
+
+  <ion-grid class="ion-text-center">
+    
+    <!-- row : skip button -->
+    <ion-row style="justify-content: start !important;">
+      <ion-button class="skip-button" (click)="goBack()"><ion-icon name="close-outline"></ion-icon></ion-button>
+    </ion-row>
+  
+  </ion-grid>
+
+  <ion-grid>
+
+    <!-- row : user name -->
+    <ion-row>
+      <h4 class="title-font">{{this.username}}</h4>
+    </ion-row>
+
+    <!-- row : user image -->
+    <ion-row class="ion-text-center">
+      
+      <ion-grid>
+        <!-- action buttons -->
+        <ion-row *ngIf="this.sessionStarted">
+          <ion-fab [ngSwitch]="this.isuserProfile">
+            <ion-icon *ngSwitchCase="true" (click)="changeImage()" class="edit-button" color="white" name="pencil"></ion-icon>
+
+            <div *ngSwitchCase="false" (click)="toggleFollow()">
+              <ion-icon *ngIf="this.showfollowBtn" class="add-button" name="add"></ion-icon>
+              <ion-icon *ngIf="this.showfollowedBtn" class="right-button" name="checkmark"></ion-icon>
+            </div>
+          </ion-fab>
+        </ion-row>
+
+        <!-- user image -->
+        <ion-row style="margin-top: 5%;">
+          <ion-avatar>
+            <!-- If user has avatar show if not / show default image -->
+            <img *ngIf="this.useravatar != ''; else default_avatar;" id="userimage" [src]="this.useravatar">
+            <ng-template #default_avatar>
+              <img style="height: 100%; width: 100%;" src="assets/imgs/default_user.png">
+            </ng-template>
+          </ion-avatar>
+        </ion-row>
+      </ion-grid>
+
+    </ion-row>
+
+    <!-- row : user info -->
+    <ion-row class="ion-text-center">
+      <ion-col size="4">
+        <div><p class="info"> Recipes </p></div>
+        <div>
+          <p class="info-val">{{this.userrecipes.length}}</p>
+        </div>
+      </ion-col>
+
+      <!-- para aqui deve ir Number Following -->
+      <ion-col size="4" (click)="navigateFollowers(true)">
+        <div><p class="info"> Following </p></div>
+        <div>
+          <p class="info-val">{{this.numFollowing}}</p>
+        </div>
+      </ion-col>
+
+      <!-- para aqui deve ir Number Followers -->
+      <ion-col size="4" (click)="navigateFollowers(false)">
+        <div><p class="info"> Followers </p></div>
+        <div>
+          <p class="info-val">{{this.numFollowers}}</p>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 1.5rem;">
+      <ion-col *ngFor="let recipe of userrecipes">
+
+        <ion-card class="main-card" (click)="clickRecipe(recipe.id)">
+          <div class="ion-text-center card-image-blk">
+              <img class="card-img" src="{{recipe.image}}" style="width: 6rem; height: 6rem; border-radius: 10% !important;">
+          </div> 
+
+          <ion-card-header style="padding-top: 2.5em;">
+              <ion-card-title class="card-title subtitle-font">{{recipe.title}}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content class="card-content subtitle-font">{{(recipe.description.length > 35)? (recipe.description | slice:0:35)+'...':(recipe.description)}}</ion-card-content>                    
+
+          <div>
+            <div style="margin-left: 10%;">
+                <ion-icon *ngFor="let num of[1,2,3,4,5]" [name]="recipe.rating < num ? 'star-outline' : 'star'">
+                </ion-icon>
+            </div>
+          </div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+    <!-- row : logout button -->
+    <ion-row *ngIf="this.isuserProfile">
+      <ion-button style="width: 40%; margin-top: 5%; margin-bottom: 10%;" (click)="logout()" class="button-font" shape="round" color="secondary">Log Out</ion-button>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

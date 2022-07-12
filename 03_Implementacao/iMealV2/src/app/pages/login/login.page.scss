@@ -1,0 +1,107 @@
+ion-content{
+    --background: var(--ion-color-primary);
+}
+
+ion-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+ion-button {
+    width: 55%;
+}
+
+hr {
+    height: 1px !important;
+    width: 25% !important;
+    background: black !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+ion-img {
+    position: absolute;  
+    top: 50px;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+}
+
+//// CSS Class
+.input-title {
+    margin-left: 20%;
+    font-family: Abel;
+}
+
+.margin-y {
+    margin-top: 1.5em;
+    margin-bottom: 2em;
+}
+
+.margin-y2 {
+    margin-top: 5.5em;
+    margin-bottom: 0.8em;
+}
+
+.margin-y3 {
+    margin-top: 3.5em;
+    margin-bottom: 0.3em;
+}
+
+.margin-t {
+    margin-top: 0.5em;
+}
+
+.margin-t-input {
+    margin-top: 0.2em;
+}
+
+.img-row {
+    //margin-top: 150px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.skip-button {
+    position: absolute;
+    top: 10px;
+    left: 60%;
+    margin: auto;
+    font-family: Abel;
+    width: 50%;
+    color: #34A853;
+}
+
+.forgot-button {
+    font-family: Abel;
+    width: 50%;
+    color: #C66358;
+}
+
+.text {
+    text-align: left;
+    font-family: Abel;
+    font-size: 15px;
+}
+
+.text-area-container {
+    width: 75%;
+    border-radius: 10px;
+    height: 35px !important;
+    align-content: center !important;
+}
+
+.text-area {
+    font-family: Abel;
+    background-color: white;
+    vertical-align: middle;
+}
+
+.title {
+    margin-top: 130px;
+    text-align: center;
+}

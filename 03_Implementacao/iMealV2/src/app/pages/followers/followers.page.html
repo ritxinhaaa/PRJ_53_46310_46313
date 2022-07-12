@@ -1,0 +1,69 @@
+<ion-content [fullscreen]="true">
+
+  <!-- back button -->
+  <ion-grid class="ion-text-center" style="margin-bottom: -1.5rem;">
+    <ion-row style="justify-content: start;">
+      <ion-button class="skip-button" (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon> 
+      </ion-button>
+    </ion-row>
+  </ion-grid>
+
+  <!-- row : username -->
+  <ion-grid class="ion-text-center">
+    <ion-row>
+      <ion-col>
+        <h4 style="font-size: medium;" class="title-font">{{this.username}}</h4>
+      </ion-col>
+    </ion-row>
+
+    <!-- row : toggle ingredients / instructions -->
+    <ion-segment color="success" [(ngModel)]="section">
+      <ion-segment-button class="subtitle-font" value="followers">
+        <ion-label>Followers</ion-label>
+      </ion-segment-button>
+      <ion-segment-button class="subtitle-font" value="following">
+        <ion-label>Following</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- row : toggle ingredients / instructions -->
+    <ion-row [ngSwitch]="section">
+      <ion-list class="list" *ngSwitchCase="'followers'">
+        <ion-row *ngFor="let follower of followers" lines="none"
+            style="display: flex;">
+          <ion-col size="8" (click)="navigateUserpage(follower.id)">
+            <ion-col size="5">
+              <ion-avatar> 
+                <img style="width: 90%; height: 90%; align-items: center;" src="{{follower.imageurl}}">
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="7" style="justify-content: start;">
+              <h6 style="align-items: start; margin: 0; padding: 0;" class="subtitle-font margin-name">{{follower.name}}</h6>
+            </ion-col>
+          </ion-col>
+          <ion-col size="4">
+            <ion-col>
+              <ion-button *ngIf="this.isuserProfile" style="width: 100%; font-size: small; height: 1.5rem;" (click)="removeFollower(follower.id)" class="button-font" shape="round" color="secondary">remove</ion-button>
+            </ion-col>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+
+      <ion-list class="list" *ngSwitchCase="'following'">
+        <ion-row *ngFor="let following of followings" lines="none" (click)="navigateUserpage(following.id)"
+            style="display: flex;">
+          <ion-col size="3">
+            <ion-avatar> <img style="width: 90%; height: 90%; align-items: center;" src="{{following.imageurl}}"> </ion-avatar>
+          </ion-col>
+          <ion-col size="5" style="justify-content: start;">
+            <h6 style="align-items: start; margin: 0; padding: 0;" class="subtitle-font margin-name">{{following.name}}</h6>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button *ngIf="this.isuserProfile" style="width: 100%; font-size: small; height: 1.5rem;" (click)="removeFollowing(following.id)" class="button-font" shape="round" color="secondary">unfollow</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-row>
+  </ion-grid>
+</ion-content>

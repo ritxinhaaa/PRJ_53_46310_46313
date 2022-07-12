@@ -1,0 +1,6 @@
+{
+	"appId": "com.company.iMeal",
+	"appName": "iMealV2",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

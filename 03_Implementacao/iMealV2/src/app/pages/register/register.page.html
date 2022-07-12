@@ -1,0 +1,106 @@
+<ion-content [fullscreen]="true">
+  <ion-grid class="ion-text-center">
+
+    <!-- row : cancel button -->
+    <ion-row>
+      <ion-button class="skip-button" routerLink="/connect">Cancel</ion-button>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-grid class="margin-t">
+
+    <!-- row : app logo -->
+    <ion-row class="img-row margin-y">
+      <img style="width: 50px; height: 50px;" src="assets/imgs/imeal_logo_smaller.png" alt="app logo"/>
+    </ion-row>
+
+    <!-- row : intro -->
+    <ion-row class="margin-t2">
+      <h2 class="title-font">Create an account</h2>
+    </ion-row>
+
+    <!-- row : intro-message -->
+    <ion-row>
+      <h5 class="text">Welcome friend, enter your details so lets get<br>
+        started in sharing your recipes.</h5>
+    </ion-row>
+
+    <!-- Validation form : validate username / email / password fields -->
+    <form [formGroup]="form">
+
+      <!-- row : username -->
+      <ion-row class="margin-t-input" style="justify-content: start !important;">
+          <h6 class="input-title" id="input-title">Name</h6>
+      </ion-row>
+      <ion-row>
+        <ion-item class="text-area-container">
+          <ion-input formControlName="name" class="text-area" id="name" placeholder="Enter first and last name"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <!-- Name error messages -->
+        <ion-label style="margin-top: 1%;" class="text" color="danger" *ngIf="form.get('name').touched && form.get('name').errors?.required">Name is mandatory</ion-label>
+     </ion-row>
+
+      <!-- row : email address -->
+      <ion-row class="margin-t-input" style="justify-content: start !important;">
+        <h6 class="input-title" id="input-title">Email <Address></Address></h6>
+      </ion-row>
+      <ion-row>
+        <ion-item class="text-area-container">
+          <ion-input type="email" formControlName="email" class="text-area" id="name" placeholder="Enter email"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+         <!-- Email error messages -->
+         <ion-label style="margin-top: 1%;" class="text" color="danger" *ngIf="form.get('email').touched && form.get('email').errors?.required">Email is mandatory</ion-label>
+         <ion-label style="margin-top: 1%;" class="text" color="danger" *ngIf="form.get('email').touched && form.get('email').errors?.email">Email is invalid</ion-label>
+      </ion-row>
+
+      <!-- row : password -->
+      <ion-row class="margin-t-input" style="justify-content: start !important;">
+        <h6 class="input-title" id="input-title">Password</h6>
+      </ion-row>
+      <ion-row>
+        <ion-item class="text-area-container">
+          <ion-input type="password" formControlName="password" class="text-area" id="name" placeholder="Enter password"></ion-input>
+        </ion-item>
+      </ion-row>
+      <!-- Password error messages -->
+      <ion-row>
+        <ion-label style="margin-top: 1%;" class="text" color="danger" *ngIf="form.get('password').touched && form.get('password').errors?.required">Password is mandatory</ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-label style="margin-top: 1%;" class="text" color="danger" *ngIf="form.get('password').touched && form.get('password').value.length < 6">Password needs to be at least 6 characters</ion-label>
+      </ion-row>
+
+      <!-- row : confirm password -->
+      <ion-row class="margin-t-input" style="justify-content: start !important;">
+        <h6 class="input-title" id="input-title">Confirm Password</h6>
+      </ion-row>
+      <ion-row>
+        <ion-item class="text-area-container">
+          <ion-input type="password" formControlName="confirmPassword" class="text-area" id="password" placeholder="Confirm password"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <!-- Confirm password error messages -->
+        <ion-label style="margin-top: 1%;" class="text" color="danger" *ngIf="form.get('confirmPassword').touched && !checkPassword()">Passwords don't match</ion-label>
+      </ion-row>
+
+      <!-- row : register button -->
+      <ion-row style="margin-top: 10%;">
+        <ion-button (click)="register()" [disabled]="!checkForm()" class="button-font" shape="round" color="secondary" routerLink="/register"> Create account </ion-button>
+      </ion-row>
+
+    </form>
+
+    <!-- row : register button -->
+    <!--<ion-row style="margin-top: 15%;">
+      <ion-button (click)="addUsername()" class="button-font" shape="round" color="secondary" routerLink="/register"> Test addusername </ion-button>
+    </ion-row>-->
+
+  </ion-grid>
+
+</ion-content>

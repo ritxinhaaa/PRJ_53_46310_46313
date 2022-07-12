@@ -1,0 +1,239 @@
+<ion-content [fullscreen]="true">
+
+  <ion-grid class="ion-text-center">
+    <!-- row : back arrow -->
+    <ion-row>
+      <ion-col size="6" style="justify-content: start;">
+        <ion-button (click)="navigateHomepage()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="4"></ion-col>
+
+      <ion-col size="2" style="justify-content: end;" *ngIf="this.authServices.sessionStarted">
+        <ion-button id="menu-button">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+
+        <!-- popover -->
+        <ion-popover trigger="menu-button">
+          <ng-template>
+            <app-popover-content>
+              <ion-list>
+                <ion-item *ngIf="this.isAuthor" lines="none" routerLink="/editrecipe">
+                  <p style="background-color: transparent;" class="text-area">Edit Recipe</p>
+                </ion-item>
+                <ion-item *ngIf="!this.isinShoppingList" lines="none">
+                  <p (click)="handleShoppinglist()" style="background-color: transparent;" class="text-area">Add to Shopping list</p>
+                </ion-item>
+              </ion-list>
+            </app-popover-content>
+          </ng-template>
+        </ion-popover>
+        <!-- end popover -->
+
+      </ion-col>
+    
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-grid>
+    <!-- row : intro message -->
+    <ion-row style="display: flex; justify-content: start">
+      <ion-col style="display: flex; justify-content: start">
+        <h2 class="title-font" style="margin-top: -1rem !important">{{this.title}}</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row  style="display: flex; justify-content: end; margin-bottom: -3.5rem; margin-top: -1rem;">
+      <ion-col size="9"></ion-col>
+      <ion-col>
+        <ion-avatar (click)="navigateUserpage()" style="display: flex; justify-content: end;">
+          <img class="profilePic"  src="{{this.authoravatar}}">
+        </ion-avatar>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="margin-t" style="width: 100%;">
+      <ion-slides *ngIf="this.images.length != 0; else default_image" style="width: 100%; height: 12rem;" [options]="mySlideOptions">
+        <ion-slide *ngFor="let image of images">
+          <img src="{{image}}" alt="Recipe image" style="width: 100%; object-fit: cover; object-position: center;"/>
+        </ion-slide>
+      </ion-slides>
+      
+      <ng-template #default_image>
+        <img src="assets/imgs/default_recipe.png" alt="Recipe image" style="width: 100%; height: 12rem; object-fit: cover; object-position: center;"/>
+      </ng-template>
+    </ion-row>
+
+    <!-- row :  -->
+    <ion-row>
+      <ion-col size="{{this.colSize}}">
+        <ion-icon *ngFor="let num of [1,2,3,4,5]" id="{{num}}" [attr.name]="this.medianRating < num ? 'star-outline' : 'star'"></ion-icon>
+      </ion-col>
+
+      <ion-col size="{{this.colSize}}">
+        <p class="small-font"><ion-icon name="person-outline"></ion-icon> {{this.portion}} people</p>
+      </ion-col>
+
+      <ion-col size="{{this.colSize}}">
+        <p class="small-font"><ion-icon name="alarm-outline" style="transform: scale(1.2);"></ion-icon> {{this.duration}} min</p>
+      </ion-col>
+
+      <ion-col size="{{this.colSize}}" (click)="toggle()" *ngIf="this.authServices.sessionStarted;">
+        <div>
+          <ion-icon [name]="this.addFavorites ? 'heart' : 'heart-outline'" style="transform: scale(1.2);"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <!-- row : description -->
+    <ion-row style="justify-content: start; margin-bottom: 0.8rem;">
+      <div class="margin-description subtitle-font" style="width: fit-content">
+        <p style="margin-top: 0;"> {{this.description}} </p>
+      </div>
+    </ion-row>
+
+
+    <!-- row : toggle ingredients / instructions -->
+    <ion-segment [(ngModel)]="section">
+      <ion-segment-button id="ing-seg" class="subtitle-font" (click)="changeButtons('ing-seg','inst-seg');" value="ingredients">
+        <ion-label>Ingredients</ion-label>
+      </ion-segment-button>
+      <ion-segment-button id="inst-seg" class="subtitle-font" (click)="changeButtons('inst-seg','ing-seg')" value="instructions">
+        <ion-label>Instructions</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- row : toggle ingredients / instructions -->
+    <ion-row [ngSwitch]="section">
+      <ion-list *ngSwitchCase="'ingredients'" class="ing-inst-list">
+        <div *ngFor="let ingredient of ingredients" class="ing-inst-list">
+          <ion-row>
+            <ion-col style="justify-content:start;"><p class="text-area">{{ingredient[0]}}</p></ion-col>
+            <ion-col style="justify-content:end;"><p class="text-area">{{ingredient[1]}}</p></ion-col>
+          </ion-row>
+          <div class="separator"></div>
+        </div>
+      </ion-list>
+      <ion-list *ngSwitchCase="'instructions'" class="ing-inst-list">
+        <div *ngFor="let instruction of instructions" class="ing-inst-list">
+          <p class="text-area">{{instruction}}</p>
+          <div class="separator"></div>
+        </div>
+      </ion-list>
+   </ion-row>
+
+  </ion-grid>
+
+  <div *ngIf="this.authServices.sessionStarted" style="display: flex; justify-content: center; margin-top: 1rem;">
+    <ion-icon *ngFor="let num of [1,2,3,4,5]" (click)="handleRating(num)" style="transform: scale(2); margin: 0.6rem; --ionicon-stroke-width: 20px; color: orange;"
+      [attr.name]="this.currentRating < num ? 'star-outline' : 'star'"> </ion-icon>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" edge slot="fixed" style="margin-bottom: 10%;">
+    <ion-fab-button color="success" (click)="this.showComments = !this.showComments">
+      <ion-icon name="chatbubble-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+
+<!-- user footer -->
+<div style="background-color: var(--ion-color-primary);">
+  <ion-toolbar *ngIf="this.authServices.sessionStarted && !this.showComments; else comment_section">
+      <ion-tabs>
+          <ion-tab-bar slot="bottom">
+              <ion-tab-button routerLink="/homepage">
+                  <ion-icon style="width: 37%;" name="home-outline"></ion-icon>
+              </ion-tab-button>
+
+              <ion-tab-button routerLink="/favorites">
+                  <ion-icon style="width: 37%;" name="heart-outline"></ion-icon>
+              </ion-tab-button>
+
+              <ion-fab-button style="margin: auto;" routerLink="/addrecipe" color="danger">
+                  <ion-icon name="add"></ion-icon>
+              </ion-fab-button>
+
+              <ion-tab-button>
+                  <ion-icon style="width: 37%;" name="notifications-outline"></ion-icon>
+              </ion-tab-button>
+
+              <ion-tab-button routerLink="/shoppinglist">
+                  <ion-icon style="width: 37%;" name="cart-outline"></ion-icon>
+              </ion-tab-button>
+          </ion-tab-bar>
+      </ion-tabs>
+  </ion-toolbar>
+
+  <!-- comments footer -->
+  <ng-template #comment_section>
+    <ion-toolbar style="border-radius: 30px 30px 0 0 !important; box-shadow: 0 0 1rem #00000030;" *ngIf="this.showComments">
+
+      <ion-row style="justify-content: start !important;">
+        <h5 class="margin-x comment-title title-info">Comments</h5>
+      </ion-row>
+
+      <ion-content *ngIf="this.recipeCommentInfo.length != 0 || this.currentComments.length != 0; else alt_message" class="comment-view">
+        <ion-list>
+          <ion-item *ngFor="let comment of this.currentComments">
+            <ion-row>
+                <ion-col size="2">
+                  <ion-avatar class="comment-img">
+                    <img style="border: 1px solid black; border-radius: 50% !important;" src="{{this.session.userimage}}">
+                  </ion-avatar>
+                </ion-col>
+    
+                <ion-col size="9">
+                  <ion-grid>
+                    <ion-row class="title-font comment-author">{{this.session.username}}</ion-row>
+                    <ion-row class="subtitle-font comment-content">{{comment}}</ion-row>
+                  </ion-grid>
+                </ion-col>
+            </ion-row>
+          </ion-item>
+
+          <ion-item *ngFor="let comment of recipeCommentInfo">
+            <ion-row>
+                <ion-col size="2">
+                  <ion-avatar class="comment-img">
+                    <img style="border: 1px solid black; border-radius: 50% !important;" src="{{comment.userimage}}">
+                  </ion-avatar>
+                </ion-col>
+    
+                <ion-col size="9">
+                  <ion-grid>
+                    <ion-row class="title-font comment-author">{{comment.username}}</ion-row>
+                    <ion-row class="subtitle-font comment-content">{{comment.comment}}</ion-row>
+                  </ion-grid>
+                </ion-col>
+            </ion-row>
+          </ion-item>
+
+        </ion-list>
+      </ion-content>
+      
+      <ng-template #alt_message>
+        <p style="justify-content: center; display: flex; font-family: Abel; margin: 5rem 0 6rem 0;">
+          Looks like this recipe has no comments yet!
+        </p>
+      </ng-template>
+
+      <ion-grid style="background-color: var(--ion-color-primary);" *ngIf="this.authServices.sessionStarted">
+        <!-- add comment row -->
+        <ion-row style="height: 50px;">
+          <ion-col size="10">
+            <ion-textarea [(ngModel)]="comment" class="text-area" placeholder="Leave a comment..."></ion-textarea>
+          </ion-col>
+          
+          <ion-col style="transform: scale(1.2); margin-bottom: 1rem;"  size="1">
+            <ion-icon (click)="handleComment()" style="width: 30px; height: 30px;" name="chevron-forward-circle-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ng-template>
+</div>

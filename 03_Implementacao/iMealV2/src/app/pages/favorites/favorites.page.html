@@ -1,0 +1,63 @@
+<ion-content>
+    <ion-grid>
+        
+        <!-- row : intro message -->
+        <ion-row>
+            <h3 class="title title-font">Favorites</h3>
+        </ion-row>
+
+        <!-- row : recipes -->
+        <!-- row : recipes [Aqui preencher os campos programaticamente] -->
+        <ion-row *ngIf="this.favoriteRecipes.length !== 0; else alt_message">
+            <ion-col *ngFor="let recipe of favoriteRecipes">
+
+                <ion-card (click)="clickRecipe(recipe.get('id'))">
+                    <div class="ion-text-center">
+                        <img src="assets/imgs/diet_example.jpg" style="width: 80%; height: 80%; border-radius: 10% !important">
+                    </div> 
+
+                    <ion-card-header>
+                        <ion-card-title class="card-title subtitle-font">{{recipe.title}}</ion-card-title>
+                    </ion-card-header>
+
+                    <ion-card-content class="card-content subtitle-font">{{(recipe.description.length > 50)? (recipe.description | slice:0:50)+'...':(recipe.description)}}</ion-card-content>                    
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <ng-template #alt_message>
+            <p> Looks like you dont have any favorite recipes yet! </p>
+            <p> Go ahead and favorite some! </p>
+        </ng-template>
+
+
+    </ion-grid>
+</ion-content>
+
+<ion-footer *ngIf="this.authServices.sessionStarted;">
+    <ion-toolbar>
+        <ion-tabs>
+            <ion-tab-bar slot="bottom">
+                <ion-tab-button routerLink="/homepage">
+                    <ion-icon style="width: 30%;" name="home"></ion-icon>
+                </ion-tab-button>
+
+                <ion-tab-button>
+                    <ion-icon style="width: 30%;" name="heart" color="success"></ion-icon>
+                </ion-tab-button>
+
+                <ion-fab-button style="margin: auto;" routerLink="/addrecipe" color="danger">
+                    <ion-icon name="add"></ion-icon>
+                </ion-fab-button>
+
+                <ion-tab-button tab="notifications">
+                    <ion-icon style="width: 30%;" name="notifications-outline"></ion-icon>
+                </ion-tab-button>
+
+                <ion-tab-button tab="shoppinglist">
+                    <ion-icon style="width: 30%;" name="cart-outline"></ion-icon>
+                </ion-tab-button>
+            </ion-tab-bar>
+        </ion-tabs>
+    </ion-toolbar>
+</ion-footer>

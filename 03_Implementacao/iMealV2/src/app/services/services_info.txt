@@ -1,0 +1,18 @@
+****************** READ ME ****************** 
+*********************************************
+
+Nesta pasta, vamos ter algumas classes que são
+invocadas por qualquer classe na aplicação sem 
+que seja necessário injetá-las no array de mo-
+dulos de cada uma.
+
+Isto é possível graças à seguinte linda de có-
+digo:
+
+@Injectable({
+  providedIn: 'root'
+})
+
+The service will be available application wide 
+as a singleton with no need to add it to a mo-
+dule's providers array

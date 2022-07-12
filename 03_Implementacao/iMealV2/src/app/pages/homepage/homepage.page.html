@@ -1,0 +1,235 @@
+<ion-content [fullscreen]="true">
+    <ion-grid class="margin-t">
+
+        <!-- row : intro -->
+        <ion-row style="justify-content: space-between !important; padding: 0 1rem 0 2rem;">
+            <h2 class="title-font intro margin-x">What do you<br>have a taste for?</h2>
+
+            <div *ngIf="this.authServices.sessionStarted;else login_register_div">
+                <ion-avatar (click)="navigateUserpage()" style="display:  flex; justify-content: center; align-items: center;">
+                    <img style="height: 80%; width: 80%;" [src]="this.useravatar">
+                </ion-avatar>
+            </div>
+
+            <ng-template #login_register_div>
+                <ion-button class="skip-button" routerLink="/connect">login/register</ion-button>
+            </ng-template>
+        </ion-row>
+
+        <!-- row : searchbar -->
+        <ion-row class="margin-y">
+            <ion-searchbar 
+                class="text-area-container text-area" 
+                placeholder="Search for a recipe"
+                [(ngModel)]="searchTerm"
+                animated></ion-searchbar>
+            <ion-icon id="filters-button" name="options" style="width: 25px; height: 25px; color: #C66358;" (click)="showIngs()"></ion-icon> <!-- (click)="addIng(true)" -->
+            <p style="color: var(--ion-color-primary)" *ngIf="this.authServices.sessionStarted">.</p>
+            <img style="width: 25px; height: 25px" src="assets/imgs/random-meal.png" (click)="randomMealGenerator()" *ngIf="this.authServices.sessionStarted">
+        </ion-row>
+
+        <!-- row : recipes [Aqui preencher os campos programaticamente] -->
+        <ion-row *ngIf="recipes.length > 0; else empty" style="justify-content:start">
+            <ion-col *ngFor="let recipe of recipes | filter:searchTerm">
+
+                <ion-card class="main-card" (click)="clickRecipe(recipe.id)">
+                    <div class="ion-text-center card-image-blk">
+                        <img class="card-img" src="{{recipe.image}}" style="width: 6rem; height: 6rem; border-radius: 10% !important;">
+                    </div> 
+
+                    <ion-card-header style="padding-top: 2.5em;">
+                        <ion-card-title class="card-title subtitle-font">{{recipe.title}}</ion-card-title>
+                    </ion-card-header>
+
+                    <ion-card-content class="card-content subtitle-font">{{(recipe.description.length > 35)? (recipe.description | slice:0:35)+'...':(recipe.description)}}</ion-card-content>                    
+
+                    <div>
+                        <div style="margin-left: 10%;">
+                            <ion-icon *ngFor="let num of[1,2,3,4,5]" [name]="recipe.rating < num ? 'star-outline' : 'star'">
+                            </ion-icon>
+                        </div>
+                    </div>
+                </ion-card>
+
+            </ion-col>
+
+            <ion-col *ngIf="recipes.length % 2 !== 0"></ion-col>
+        </ion-row>
+
+        <ng-template #empty>
+            <p class="ion-text-center" style="justify-content: center; display: flex; font-family: Abel; margin: 4rem 0 0 0;">
+                Looks like no results have been found <br> for this search!
+            </p>        
+        </ng-template>
+    </ion-grid>
+</ion-content>
+
+<footer>
+   <div [ngSwitch]="this.footerChoice">
+        <div *ngIf="this.authServices.sessionStarted">
+            <ion-toolbar *ngSwitchCase="'footer'">
+                <ion-tabs>
+                    <ion-tab-bar slot="bottom">
+                        <ion-tab-button tab="home">
+                            <ion-icon style="width: 37%;" name="home" color="success"></ion-icon>
+                        </ion-tab-button>
+
+                        <ion-tab-button routerLink="/favorites">
+                            <ion-icon style="width: 37%;" name="heart-outline"></ion-icon>
+                        </ion-tab-button>
+
+                        <ion-fab-button routerLink="/addrecipe" color="danger">
+                            <ion-icon name="add"></ion-icon>
+                        </ion-fab-button>
+
+                        <ion-tab-button>
+                            <ion-icon style="width: 37%;" name="notifications-outline"></ion-icon>
+                        </ion-tab-button>
+
+                        <ion-tab-button routerLink="/shoppinglist">
+                            <ion-icon style="width: 37%;" name="cart-outline"></ion-icon>
+                        </ion-tab-button>
+                    </ion-tab-bar>
+                </ion-tabs>
+            </ion-toolbar>
+
+            <!-- random meal generator footer -->
+            
+            <div *ngSwitchCase="'randomMeal'" style="background-color: var(--ion-color-primary);">
+                <ion-toolbar style="border-radius: 30px 30px 0 0 !important; box-shadow: 0 0 1rem #00000030;">        
+
+                    <ion-header translucent>
+                        <ion-toolbar>
+                        <ion-title style="font-family: Abel;" class="margin-x random-title title-info">Random meal generator</ion-title>
+                        <ion-buttons slot="end">
+                            <ion-button (click)="dismissModal()">Close</ion-button>
+                            </ion-buttons>
+                        </ion-toolbar>
+                    </ion-header>
+
+                    <ion-content style="height: 19rem; width: 100%;">
+                        <img src="assets/imgs/gif.gif" *ngIf="this.showImage">
+
+                        <ion-row style="display: flex; justify-content: center; margin-top: 3rem;">
+                            <ion-card class="random-meal-card" (click)="clickRecipe(randomMeal.id)" *ngIf="!this.showImage" style="margin-left: 25%;">
+                                <div class="ion-text-center card-image-blk">
+                                    <img class="card-img" src="{{randomMeal.image}}" style="width: 6rem; height: 6rem; border-radius: 10% !important;">
+                                </div> 
+                                <ion-card-header style="padding-top: 2.5em;">
+                                    <ion-card-title class="card-title subtitle-font">{{randomMeal.title}}</ion-card-title>
+                                </ion-card-header>
+                                <div>
+                                    <div style="margin: 0.8rem 0 0 1.5rem ; transform: scale(1.1);">
+                                        <ion-icon *ngFor="let num of[1,2,3,4,5]" [name]="randomMeal.rating < num ? 'star-outline' : 'star'"></ion-icon>
+                                    </div>
+                                </div>
+                            </ion-card>
+                        </ion-row>
+                    </ion-content>        
+                </ion-toolbar>
+            </div>
+        </div>
+
+        <!-- filters footer -->
+        <div *ngSwitchCase="'filter'" style="background-color: var(--ion-color-primary);">
+            <ion-toolbar style="border-radius: 30px 30px 0 0 !important; box-shadow: 0 0 1rem #00000030;">
+
+                <ion-header translucent>
+                    <ion-toolbar>
+                    <ion-title style="font-family: Abel;" class="margin-x random-title title-info">Filters</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="dismissModal()">Close</ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ion-header>
+                
+                <ion-content style="height: 25rem; width: 100%">
+                    
+                    <ion-grid class="modal-content">
+
+                        <!-- row : filter by ingredients -->
+                        <ion-row>
+                            <ion-grid>
+                                <!-- title -->
+                                <ion-row style="justify-content: start !important;">
+                                    <h5 class="margin-x subtitle-font" style="margin-left: 1.5rem;"><ion-icon name="nutrition-outline"></ion-icon> Filter by ingredients</h5>
+                                </ion-row>
+
+                                <!-- row: choose ingredients -->
+                                <ion-row>
+                                    <div class="container" style="box-shadow: 0 0 0.5rem #00000030; width: 87%; margin-top: 1rem; margin-bottom: 1.5rem;">
+
+                                        <!-- input e drop down list para escolha do ingrediente -->
+                                        <ion-list id="ingredient-list">
+                                        <ion-item id="ingredientChoice" class="text-area">
+
+                                            <ion-input [(ngModel)]="searchIng" id="ingredient" placeholder="Search for ingredient"></ion-input>
+
+                                            <ion-select [(ngModel)]="choosenIngredient" (ionChange)="setValue('ingredient')" selectedText=" ">
+                                            <ion-select-option *ngFor="let ingredient of ingredientDatabase | filter:searchIng" value="{{ingredient.id}}">
+                                                {{ingredient.name}}
+                                            </ion-select-option>
+                                            </ion-select>
+                                        </ion-item>
+                                        </ion-list>
+
+                                        <!-- ingredient box -->
+                                        <div id="ing-container" class="margin-small-y">
+                                            <p id="template" class="ing-block" hidden> apple </p>
+                                        </div>
+
+                                        <div style="display: flex; justify-content: center">
+                                            <ion-button color=success class="button-font" style="width: 30%;" (click)="addIng()">Add</ion-button>
+                                        </div>
+                                    </div>
+                                </ion-row>
+                                <ion-row class="margin-x" style="justify-content: start; margin-left: 1rem;">
+                                    <ion-col size="8">
+                                        <ion-note class="text-area">Search exclusively by given ingredients</ion-note>
+                                    </ion-col>
+                                    <ion-col size="1">
+                                        <ion-checkbox (ionChange)="clickExclusiveSearch($event)" checked="false"></ion-checkbox>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-row>
+
+                        <!-- row : filter by Diet type -->
+                        <ion-row class="margin-y2">
+                            <ion-grid>
+                                <!-- title -->
+                                <!-- a margin-x foi colocada na tag h5, para nÃ£o modificar o tamanho da row -->
+                                <ion-row style="justify-content: start !important;">
+                                    <h5 style="margin-left: 2rem; margin-top: -0.5rem;" class="margin-x subtitle-font">Filter by Diet Type</h5>
+                                </ion-row>
+                    
+                                <!-- icons -->
+                                <ion-row style="width: 350px; margin-top: -1rem; margin-bottom: -3rem;" class="diet-row">
+                                    <ion-col *ngFor="let diet of dietTypes" size="3" (click)="selectedDiet(diet)">
+                                        <figure id="{{diet}}">
+                                        <ion-avatar id="img{{diet}}">
+                                            <img src="assets/imgs/diet_type/{{diet}}.jpg">
+                                        </ion-avatar>
+                                        <figcaption style="font-size: x-small;" class="ion-text-center subtitle-font">{{diet}}</figcaption>
+                                        </figure>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-row>
+
+                        <!-- row : aplly filter button -->
+                        <ion-row style="padding-top: 3rem; background-color: white;">
+                            <ion-col>
+                                <ion-button style="width: 85%; margin-bottom: 1rem;" (click)="applyFilter()" class="button-font" shape="round" color="secondary">Apply Filters</ion-button>
+                            </ion-col>
+
+                            <ion-col>
+                                <ion-button fill="outline" style="width: 85%; margin-bottom: 1rem;" (click)="clearFilter()" class="button-font" shape="round" color="secondary">Clear Filters</ion-button>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>              
+                </ion-content>          
+            </ion-toolbar>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,197 @@
+ion-content {
+    --background: var(--ion-color-primary);
+}
+
+ion-row {
+    display: flex;
+    align-items: center;        
+    justify-content: center;
+    width: 100%;
+}
+
+ion-button {
+    width: 75%;
+}
+
+ion-tab-bar  {
+    background-color:white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+ion-tab-button {
+    background-color:white;
+}
+
+ion-col {
+    display: flex;
+    justify-content: center;
+}
+
+ion-card {
+    width: 10rem;
+    //width: 157px;
+    height: 12rem;
+    padding: 5px;
+    border-radius: 20px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+ion-modal {
+    height: 70%;
+}
+
+ion-card-header, ion-card-content {
+    padding-bottom: 0.5em;
+    padding-left: 0.7em;
+    padding-right: 0.7em;
+}
+
+ion-card.main-card {
+    border-radius: 30px;
+    max-width: 500px;
+    overflow: visible;
+    margin-bottom:2.5em;
+}
+
+ion-searchbar{
+    ::ng-deep{
+        .searchbar-input-container{            
+            .searchbar-input{ 
+                border-radius: 10px;
+            }
+        }
+    }   
+}
+
+hr {
+    height: 1px !important;
+    width: 25% !important;
+    background: black !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+//// CSS Class
+
+.input-title {
+    margin-left: 20%;
+    font-family: Abel;
+}
+
+.modal-content {
+    background-color: white !important;
+    width: 100%;
+}
+
+.margin-y {
+    margin-top: 1.5em;
+    margin-bottom:2.5em;
+}
+
+.margin-y2 {
+    margin-top: 1.5em;
+}
+
+.margin-t {
+    margin-top: 2.5em;
+}
+
+.card-title {
+    font-size: medium;
+}
+
+.card-content {
+    font-size: small;
+}
+
+.skip-button {
+    position: absolute;
+    top: 10px;
+    left: 60%;
+    margin: auto;
+    font-family: Abel;
+    width: 50%;
+    color: #34A853;
+}
+
+.text-area-container {
+    width: 80%;
+    height: 35px !important;
+    align-content: center !important;
+}
+
+
+.text-area {
+    font-family: Abel;
+    vertical-align: middle;
+    color: grey;
+}
+
+// ->>>
+// ->>> Random meal generator css
+
+.random-title {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.random-meal-card {
+    width: 11rem;
+    height: 11rem;
+    border-radius: 30px;
+    max-width: 500px;
+    overflow: visible;
+    margin-bottom:2.5em;
+}
+
+// ->>>
+// ->>> Diet type css
+
+.diet-row {
+    justify-content:flex-start;
+    flex-wrap:nowrap;
+    overflow-x: scroll;
+    overflow-y:hidden;
+}
+
+.diet-row ion.col {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.selected-diet {
+    border: 2px solid black;
+}
+
+// ->>>
+// ->>> Ingredient filter css
+
+.container {
+    padding: 3%;
+    width: 80%;
+    border-radius: 10px;
+    align-content: center !important;
+    font-family: Abel;
+    background-color: white;
+    vertical-align: middle;
+    border: none;
+    outline: none;
+}
+
+.card-img {
+    max-width:100px;
+}
+
+.card-main-content {
+    border-radius: 20px;
+}
+
+.card-image-blk {
+    --background: transparent;
+    --border-color: transparent;
+    margin-bottom: -30px;
+    margin-top: -30px;
+}

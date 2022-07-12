@@ -1,0 +1,49 @@
+ion-content{
+    --background: var(--ion-color-primary);
+}
+
+ion-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+ion-img {
+    position: absolute;  
+    top: 50px;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+}
+
+// ***** CSS Classes *****
+
+.title {
+    margin-top: 130px;
+    text-align: center;
+}
+
+.margin-x {
+    margin-top: 2.5em;
+    margin-bottom: 2.5em;
+}
+
+#container2 {
+    position: absolute;  
+    top: 200px;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+}
+
+#welcomeButton {
+    position: absolute;  
+    //top: 0;  
+    bottom: 100px;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    font-family: Open Sans;
+    width: 70%;
+}

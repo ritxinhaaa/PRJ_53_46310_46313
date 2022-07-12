@@ -1,0 +1,41 @@
+ion-content{
+    --background: var(--ion-color-primary);
+}
+
+ion-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+ion-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ion-list {
+    background: var(--ion-color-primary) !important;
+    width: 100%;}
+
+//// CSS Class
+
+.margin-x {
+    margin-left: 2.5em;
+    margin-right: 2.5em;
+}
+
+.margin-name {
+    margin-left: 0.7em;
+}
+
+.skip-button {
+    color: #34A853;
+}
+
+.text-area {
+    font-family: Abel;
+    background-color: white;
+    vertical-align: middle;
+}

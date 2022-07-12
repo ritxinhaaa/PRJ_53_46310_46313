@@ -1,0 +1,237 @@
+<ion-content [fullscreen]="true">
+
+  <ion-grid class="ion-text-center">
+    <!-- row : cancel button -->
+    <ion-row>
+      <ion-button class="skip-button" routerLink="/homepage">Cancel</ion-button>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="ion-text-center">
+
+    <!-- row : intro -->
+    <ion-row>
+      <h2 class="title-font title">Edit Recipe</h2>
+    </ion-row>
+
+    <!-- grid : inputs -->
+    <ion-grid class="margin-y">
+
+      <form [formGroup]="form">
+        
+        <!-- row : choose diet type -->
+        <ion-row>
+
+          <ion-grid class="ion-text-center">
+            <!-- title -->
+            <!-- a margin-x foi colocada na tag h5, para não modificar o tamanho da row -->
+            <ion-row style="justify-content: start !important;">
+              <h5 class="margin-x subtitle-font">Choose Diet Type</h5>
+            </ion-row>
+
+            <!-- icons -->
+            <ion-row style="width: 350px;" class="diet-row">
+              <ion-col *ngFor="let diet of dietTypes" size="3" (click)="handleDiet(diet)">
+                <figure id="{{diet}}">
+                  <ion-avatar id="img{{diet}}">
+                    <img src="assets/imgs/diet_type/{{diet}}.jpg">
+                  </ion-avatar>
+                  <figcaption class="ion-text-center subtitle-font">{{diet}}</figcaption>
+                </figure>
+              </ion-col>
+            </ion-row>
+
+          </ion-grid>
+        </ion-row>
+
+
+        <!-- row : title -->
+        <ion-row>
+          <ion-grid class="ion-text-center">
+
+            <!-- title -->
+            <ion-row style="justify-content: start !important;">
+              <h5 class="margin-x subtitle-font"><ion-icon name="pencil"></ion-icon> Title</h5>
+            </ion-row>
+
+            <!-- input -->
+            <ion-row>
+              <ion-item class="text-area-container">
+                <ion-input formControlName="title" class="text-area" placeholder="Give your recipe a name" required></ion-input>
+              </ion-item>
+            </ion-row>
+            
+
+          </ion-grid>
+        </ion-row>
+
+        <!-- row : duration -->
+        <ion-row class="margin-y">
+          <ion-grid class="ion-text-center">
+
+            <!-- title -->
+            <ion-row style="justify-content: start !important;">
+              <h5 class="margin-x subtitle-font"><ion-icon name="time-outline"></ion-icon> Duration</h5>
+            </ion-row>
+
+            <!-- input -->
+            <ion-row>
+              <ion-item class="text-area-container">
+                <ion-input formControlName="duration" class="text-area" placeholder="How long is your recipe (e.g: 30 min)" required="true"></ion-input>
+              </ion-item>
+            </ion-row>
+
+          </ion-grid>
+        </ion-row>
+
+        <!-- row : portion -->
+        <ion-row class="margin-y">
+          <ion-grid class="ion-text-center">
+
+            <!-- title -->
+            <ion-row style="justify-content: start !important;">
+              <h5 class="margin-x subtitle-font"><ion-icon name="people-outline"></ion-icon> People</h5>
+            </ion-row>
+
+            <!-- portion -->
+            <ion-row>
+              <ion-item class="text-area-container">
+                <ion-input formControlName="portion" class="text-area" placeholder="How many people will enjoy your recipe (e.g: 3-4)" required></ion-input>
+              </ion-item>
+            </ion-row>
+
+          </ion-grid>
+        </ion-row>
+
+        <!-- row : description -->
+        <ion-row class="margin-y">
+          <ion-grid class="ion-text-center">
+
+            <!-- title -->
+            <ion-row style="justify-content: start !important;">
+              <h5 class="margin-x subtitle-font"><ion-icon name="document-text-outline"></ion-icon> Description</h5>
+            </ion-row>
+
+            <!-- description -->
+            <ion-row>
+              <textarea formControlName="description" class="text-area input-container" rows="5" placeholder="Give us a small description for your recipe" required></textarea>
+            </ion-row>
+
+          </ion-grid>
+        </ion-row>
+
+        <!-- row : add ingredients -->
+        <ion-row class="margin-y">
+          <ion-grid class="ion-text-center">
+
+            <!-- title -->
+            <ion-row style="justify-content: start !important;">
+              <h5 class="margin-x subtitle-font"><ion-icon name="nutrition-outline"></ion-icon> Add ingredients</h5>
+            </ion-row>
+
+            <!-- ingredients -->
+            <ion-row>
+              <div class="input-container">
+                
+                <!-- input e drop down list para escolha do ingrediente -->
+                <ion-list id="ingredient-list">
+                  <ion-item id="ingredientChoice" class="text-area">
+
+                    <ion-input formControlName="ingredient" [(ngModel)]="searchTerm" id="ingredient" placeholder="Insert an ingredient" aria-required="true"></ion-input>
+
+                    <ion-select formControlName="option" [(ngModel)]="option" (ionChange)="setValue('ingredient')" selectedText=" ">
+                      <ion-select-option *ngFor="let ingredient of allingredients | filter:searchTerm" value="{{ingredient.id}}">
+                        {{ingredient.name}}
+                      </ion-select-option>
+                    </ion-select>
+
+                    <ion-input formControlName="unit" [(ngModel)]="unit" placeholder="unit"></ion-input>
+                  </ion-item>
+                </ion-list>
+
+                <!-- ingredient box -->
+                <p id="template" class="ing-block" hidden> apple </p>
+                <div id="ing-container" class="margin-small-y">
+                </div>
+
+                <div>
+                  <ion-button class="button-font" (click)="addIng()">Add</ion-button>
+                </div>
+              </div>
+            </ion-row>
+
+          </ion-grid>
+        </ion-row>
+
+        <!-- row : add instructions -->
+        <ion-row class="margin-y">
+          <ion-grid class="ion-text-center">
+
+            <!-- title -->
+            <ion-row style="justify-content: start !important;">
+              <h5 class="margin-x subtitle-font"><ion-icon name="create-outline"></ion-icon> Add intructions</h5>
+            </ion-row>
+
+            <!-- instructions -->
+            <ion-row>
+              <div class="input-container">
+                <ion-list id="instruction-list">
+                  <ion-item id="item-template" class="text-area">
+                    <ion-input formControlName="instruction" id="0" placeholder="Insert next instruction"></ion-input>
+                    <ion-icon name="add-circle-outline" (click)="addInstruction()"></ion-icon>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </ion-row>
+
+          </ion-grid>
+        </ion-row>
+
+        <!-- row : add picture -->
+        <ion-row class="margin-y">
+          <ion-grid class="ion-text-center">
+
+            <!-- title -->
+            <ion-row style="justify-content: start !important;">
+              <h5 class="margin-x subtitle-font"><ion-icon name="camera-outline"></ion-icon> Add Picture</h5>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <div class="image-picker" (click)="handlePreviewimage('picker1')">
+                  <img id="picker1" class="image-show">
+                </div>
+              </ion-col>
+
+              <ion-col>
+                <div class="image-picker" (click)="handlePreviewimage('picker2')">
+                  <img id="picker2" class="image-show">
+                </div>
+              </ion-col>
+
+              <ion-col>
+                <div class="image-picker" (click)="handlePreviewimage('picker3')">
+                  <img id="picker3" class="image-show">
+                </div>
+              </ion-col>
+
+              <ion-col>
+                <div class="image-picker" (click)="handlePreviewimage('picker4')">
+                  <img id="picker4" class="image-show">
+                </div>
+              </ion-col>
+            </ion-row>
+
+          </ion-grid>
+        </ion-row>
+
+        <!-- row : submit button -->
+        <ion-row>
+          <ion-button (click)="navigateRecipepage()" class="button-font" shape="round" color="secondary">Save changes</ion-button>
+        </ion-row>
+
+      </form>
+    </ion-grid>
+
+  </ion-grid>
+</ion-content>

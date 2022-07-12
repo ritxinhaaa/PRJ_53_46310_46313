@@ -1,0 +1,89 @@
+ion-content{
+    --background: var(--ion-color-primary);
+}
+
+ion-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+ion-card {
+    width: 10rem;
+    //width: 157px;
+    height: 12rem;
+    padding: 5px;
+    border-radius: 20px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+ion-card-header, ion-card-content {
+    padding-bottom: 0.5em;
+    padding-left: 0.7em;
+    padding-right: 0.7em;
+}
+
+ion-card.main-card {
+    border-radius: 30px;
+    max-width: 500px;
+    overflow: visible;
+    //margin-top: 80px;
+    margin-bottom:2.5em;
+}
+
+
+//// CSS Class
+.margin-x {
+    margin-left: 2.5em;
+    margin-right: 2.5em;
+}
+
+.card-title {
+    font-size: medium;
+}
+
+.card-content {
+    font-size: small;
+}
+
+.skip-button {
+    color: #34A853;
+}
+
+.info {
+    font-family: Abel;
+    color: #34A853;
+}
+
+.add-button {
+    background-color: #C66358;
+    border-radius: 50%;
+}
+
+.card-img {
+    max-width:100px;
+}
+
+.card-main-content {
+    border-radius: 20px;
+}
+
+.card-image-blk {
+    --background: transparent;
+    --border-color: transparent;
+    margin-bottom: -30px;
+    margin-top: -30px;
+}
+
+.right-button {
+    background-color: #34A853;
+    border-radius: 50%;    
+}
+
+.edit-button {
+    background-color: #34A853;
+    border-radius: 50%;
+    padding: 20%;
+}

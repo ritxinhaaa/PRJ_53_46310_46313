@@ -1,0 +1,84 @@
+<ion-content [fullscreen]="true">
+
+  <ion-grid class="ion-text-center">
+    <!-- row : skip button -->
+    <ion-row>
+      <ion-button class="skip-button" routerLink="/homepage">Skip</ion-button>
+    </ion-row>
+  
+    <!-- row : app logo -->
+    <ion-row>
+      <div id="container">
+        <ion-img style="width: 50px; height: 50px;" src="assets/imgs/imeal_logo_smaller.png"></ion-img>
+      </div>
+    </ion-row>
+
+    <!-- row : intro -->
+    <ion-row>
+      <h3 class="title title-font"> Connect an iMeal account </h3>
+    </ion-row>
+
+    <!-- row : sub-intro message -->
+    <ion-row class="margin-x2">
+      <ion-text color="dark">
+        <h5 class="title-font"> so that you can </h5>
+      </ion-text>
+    </ion-row>
+
+    <!-- row : notifications page -->
+    <ion-row>
+      <ion-button class="button-font" shape="round" color="secondary" routerLink="/fcm">
+        Notifications
+      </ion-button>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-grid>        
+    <ion-row class="ion-justify-content-center">  
+      <ion-col size="1">  
+        <div><ion-icon src="assets/icon/checkbox.svg"></ion-icon></div>  
+      </ion-col>  
+      <ion-col size="8">  
+        <div><h5>Plan your weekly meals</h5> </div>  
+      </ion-col>  
+    </ion-row>  
+
+    <ion-row class="ion-justify-content-center">  
+      <ion-col size="1">  
+        <div><ion-icon src="assets/icon/checkbox.svg"></ion-icon></div>  
+      </ion-col>  
+      <ion-col size="8">  
+        <div><h5>Have a shopping list</h5> </div>  
+      </ion-col>  
+    </ion-row>  
+
+    <ion-row class="ion-justify-content-center">  
+      <ion-col size="1">  
+        <div><ion-icon src="assets/icon/checkbox.svg"></ion-icon></div>  
+      </ion-col>  
+      <ion-col size="8">  
+        <div><h5>Access your favorite recipes</h5> </div>  
+      </ion-col>  
+    </ion-row>  
+
+    <ion-row class="ion-justify-content-center">  
+      <ion-col size="1">  
+        <div><ion-icon src="assets/icon/checkbox.svg"></ion-icon></div>  
+      </ion-col>  
+      <ion-col size="8">  
+        <div><h5>Share and comment meals</h5> </div>  
+      </ion-col>  
+    </ion-row> 
+
+    <!-- row : register button -->
+    <ion-row class="registerButton">
+      <ion-button class="button-font" shape="round" color="secondary" routerLink="/register"> register </ion-button>
+    </ion-row>
+
+    <!-- row : login button -->
+    <ion-row style="margin-top: 2%;">
+      <ion-button class="button-font" shape="round" color="secondary" routerLink="/login"> login </ion-button>
+    </ion-row>  
+  </ion-grid>
+</ion-content>
