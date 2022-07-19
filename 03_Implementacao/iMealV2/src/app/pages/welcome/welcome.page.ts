@@ -34,13 +34,9 @@ export class WelcomePage implements AfterViewInit {
     const alert = await new AlertController().create({
       header: title,
       subHeader: msg
-    })
-
+    });
     alert.present();
   }
 
-
   nextPage() { this.nav.navigateForward('/connect'); }
-
-  // filldb() { this.session.readJson(); }
 }

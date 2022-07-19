@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export class EditrecipePageForm {
 
@@ -8,11 +8,11 @@ export class EditrecipePageForm {
         this.formBuilder = formBuilder;
     }
 
-    createForm() : FormGroup {
+    createForm(): FormGroup {
         return this.formBuilder.group({
-            title: ['', [Validators.required]], // Validators class : Provides a set of built-in validators that can be used by form controls.
-            duration: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
-            portion: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+            title: ['', [Validators.required]], //Validators class: Provides a set of built-in validators that can be used by form controls.
+            duration: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+            portion: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
             description: ['', [Validators.required]],
             ingredient: [''],
             option: [''],
@@ -20,5 +20,4 @@ export class EditrecipePageForm {
             instruction: ['']
         });
     }
-
 }

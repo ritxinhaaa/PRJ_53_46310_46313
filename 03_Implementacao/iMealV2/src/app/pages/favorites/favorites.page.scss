@@ -12,7 +12,6 @@ ion-row {
 
 ion-card {
     width: 10rem;
-    //width: 157px;
     height: 12rem;
     padding: 5px;
     border-radius: 20px;
@@ -30,7 +29,6 @@ ion-card.main-card {
     border-radius: 30px;
     max-width: 500px;
     overflow: visible;
-    //margin-top: 80px;
     margin-bottom:2.5em;
 }
 
@@ -48,14 +46,26 @@ ion-card.main-card {
 
 .card-title {
     font-size: medium;
+    height: 1.3em; 
+    line-height: 1.3em;
+    overflow: hidden;
 }
 
 .card-content {
     font-size: small;
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
 }
 
 .card-img {
     max-width:100px;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 10% !important;
 }
 
 .card-main-content {

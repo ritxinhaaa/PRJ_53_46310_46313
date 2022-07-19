@@ -14,7 +14,7 @@ import { Session } from './services/variables/variables.page';
 export class AppComponent {
 
   constructor(
-    private route: Router,
+    private router: Router,
     private session: Session,
     private authServices: AuthServices,
     private dbServices: DatabaseServices) {
@@ -22,14 +22,15 @@ export class AppComponent {
   }
 
   initializeApp() {
-    // Preencher o array que guarda todos os ingredientes que estõa na base dados
+    // Preencher o array que guarda todos os ingredientes que estão na base dados
     this.dbServices.getIngredients().then((response) => {
       this.session.ingredientDatabase = response;
     })
 
     // Verificar se existe um utilizador logado
     this.authServices.checkSession().then(() => {
-      console.log(this.session.userimage);
+      // console.log(this.session.userimage);
+      this.router.navigate(['homepage']);
     })
   }
 

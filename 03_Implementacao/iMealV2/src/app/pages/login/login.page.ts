@@ -25,17 +25,15 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    let email = this.form.get('email').value;
-    let password = this.form.get('password').value;
-    
+    const email = this.form.get('email').value;
+    const password = this.form.get('password').value;
+
     this.authServices.login(email, password).then(() => {
-      if(this.authServices.userVerified) this.navigateHomepage();
+      if(this.authServices.userVerified) {this.navigateHomepage();}
     });
   }
-
 
   navigateHomepage() {
     this.router.navigate(['homepage']);
   }
-
 }

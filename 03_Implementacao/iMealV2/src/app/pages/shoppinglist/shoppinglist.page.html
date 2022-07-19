@@ -10,21 +10,19 @@
       <ion-list style="background: transparent !important;">
         <ion-item-sliding id="recipe.id" #slidingItem *ngFor="let recipe of recipes">
           <ion-item id="{{recipe.title}}" color="none" lines="none">
-            <ion-grid style="background-color: white; margin: 0.5rem; border-radius: 20px; box-shadow: 0 0 0.5rem #00000030;">
+            <ion-grid class="grid1">
               <ion-row (click)="clickRecipe(recipe.id)">
                 <ion-col>
-                  <img src="{{recipe.image}}">  
+                  <img src="{{recipe.image}}" style="width: 100%; height: 6rem;">
                 </ion-col>
                 <ion-col>
                   <h3 style="font-size: larger; font-family: Abel;">{{recipe.title}}</h3>
                 </ion-col>
               </ion-row>
               <ion-row *ngFor="let ingredient of recipe.ingredients">
-                <ion-col style="display: flex; justify-content: left; margin: 0 2rem 0 3rem;">
+                <ion-col style="display: flex; justify-content: left; margin: 0 2rem 0 1rem;">
                   <input type="checkbox" id="{{recipe.title}}-{{ingredient[0]}}" style="margin-right: .5rem;">
-                  <label for="{{recipe.title}}-{{ingredient[0]}}"
-                    style="width: 100%; display: flex; justify-content: space-between;
-                          font-family: Abel; font-size: larger;">
+                  <label for="{{recipe.title}}-{{ingredient[0]}}" class="labelIng">
                     <span>{{ingredient[0]}}</span>
                     <span>{{ingredient[1]}}</span>
                   </label>
@@ -34,8 +32,7 @@
           </ion-item>
 
           <ion-item-options side="end" (ionSwipe)="removeRecipe(recipe.title, recipe.id)">
-            <ion-button expandable (click)="removeRecipe(recipe.title, recipe.id)" color="danger"
-            style="height: 95%; margin: 0.5rem 0 0.5rem 0; width: 19%;">
+            <ion-button expandable (click)="removeRecipe(recipe.title, recipe.id)" color="danger" class="buttonRemove">
               <ion-icon name="trash"></ion-icon>
             </ion-button>
           </ion-item-options>

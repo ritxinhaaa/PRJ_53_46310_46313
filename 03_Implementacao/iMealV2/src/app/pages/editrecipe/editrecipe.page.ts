@@ -8,7 +8,6 @@ import { EditrecipePageForm } from './editrecipe.page.form';
 // Services
 import { DatabaseServices } from '../../services/database/database.page';
 import { Session } from '../../services/variables/variables.page';
-import { resolve } from 'dns';
 
 @Component({
   selector: 'app-editrecipe',
@@ -16,17 +15,6 @@ import { resolve } from 'dns';
   styleUrls: ['./editrecipe.page.scss']
 })
 export class EditrecipePage implements OnInit {
-
-  /* 
-  Para a página de editar a receita: (apagar isto depois)
-
-  ---> Antes da página carregar
-  - Obter informação da receita
-  - Colocar informação toda no xml
-  
-  ---> Depois de sairmos da página
-  - Fazer update da informação na base de dados
-  */
 
   form: FormGroup; 
 
@@ -66,7 +54,6 @@ export class EditrecipePage implements OnInit {
   inputUnit;
 
   // Handle images
-  images64 = [];
   changedIndex = [null, null, null, null];
 
   constructor(
@@ -86,7 +73,7 @@ export class EditrecipePage implements OnInit {
     this.inglistIds = [];
     this.inglistUnits = [];
     this.inglistNames = []; 
-    this.instructions= []; // must be reseted everytime we return to this page
+    this.instructions = []; // must be reseted everytime we return to this page
 
     this.recipeinfo = this.session.recipeinfo;
 
@@ -117,20 +104,14 @@ export class EditrecipePage implements OnInit {
 
     // Get author name (is the name of the logged user)
     this.authorName = this.session.username;
-  
-    console.log(this.images)
   }
 
+  // Fired when the component routing to has finished animating.
   ionViewDidEnter() {
     // reset ui to default parameters
     this.resetUI();
     // set default info
     this.setdefaultInfo();
-  }
-
-  // Fired when the component routing from is about to animate.
-  ionViewWillLeave() {
-    // if(this.save) this.saveChanges();
   }
 
   //
@@ -161,7 +142,6 @@ export class EditrecipePage implements OnInit {
     }
 
     // set instructions
-    console.log(this.instructions);
     for (let i = 0; i < this.instructions.length; i++) {
       const instruction = this.instructions[i];
       this.setInstruction(i, instruction);
@@ -238,7 +218,8 @@ export class EditrecipePage implements OnInit {
   resetUI() {
     // Limpar bloquinhos com ingredientes da view
     let div = document.getElementById("ing-container");
-    div.replaceChildren();
+    //div.replaceChildren();
+    div.innerHTML = "";
 
     // Limpar bloquinhos com instruções da view
     for (let i = 1; i < this.instructions.length+1; i++) {
@@ -285,9 +266,6 @@ export class EditrecipePage implements OnInit {
 
       // if ingredient was already added
       if(this.inglistIds.includes(ingid)) return;
-
-      console.log(ingid);
-      console.log(ingunit);
 
       ingunit = (ingunit != null) ? ingunit : "" ;
 
@@ -336,8 +314,6 @@ export class EditrecipePage implements OnInit {
     this.instructions.push(newInstruction);
     let message = this.numberInstruction + ". " + newInstruction;
 
-    console.log(idx);
-
     const list = document.getElementById("instruction-list");
     const item = document.createElement("ion-item");
     this.renderer.addClass(item, "text-area");
@@ -374,9 +350,7 @@ export class EditrecipePage implements OnInit {
     })
     if(await image) {
       const result = await image;
-      // this.images64.push(result);
       DataUrl = result.dataUrl;
-      console.log(DataUrl);
 
       switch (pickerid) {
         case 'picker1':
@@ -400,41 +374,47 @@ export class EditrecipePage implements OnInit {
   handleUploadimages(recipeid) {
     return new Promise((resolve, reject) => {
 
-      console.log(this.images);
-      console.log(this.changedIndex);
+      if(this.changedIndex.every(element => element == null)) {
+        resolve(null);
+      }
 
-      for(let i = 0; i < this.changedIndex.length; i++) {
+      let idx = -1;
+      this.changedIndex.forEach(imageLink => {
 
-        if(this.changedIndex[i] != null) { // se este index foi alterado nas imagens
-          const photo = this.changedIndex[i];
-          const filePath = `uploads/${recipeid}/img${i+1}.png`;
+        idx++;
+
+        if(imageLink != null) {
+
+          const photo = imageLink;
+          const filePath = `uploads/${recipeid}/img${idx+1}.png`;
           const fileRef = ref(getStorage(), filePath);
 
-          let base64 = photo.dataUrl.split('data:image/jpeg;base64,')[1];
+          let base64 = photo.dataUrl.split(',')[1];
           let uploadResult = uploadString(fileRef, base64, 'base64');
-  
+          
           uploadResult.then((response) => {
             getDownloadURL(fileRef).then((firestoreurl) => {
 
               const newLink = firestoreurl;
-              
+
               // Se o index onde estamos está definido no array da base de dados 
               // (user alterou a imagem 3 mas esta antes não tinha image nenhuma, vamos até ao idx 2,
               // mas images.length só tem size 2 (só indexa até ao 1) , lg não podemos indexar o 2. Para o fazermos o size 
               // tem que ser maior que o index ou igual)
-              if(i <= this.images.length-1) {
-                this.images[i] = newLink;
+              if(idx <= this.images.length-1) {
+                this.images[idx] = newLink;
               }
               else {
                 this.images.push(newLink);
               }
 
+              if(idx == 3) {
+                resolve(this.images);
+              }
             })
           })
         }
-      }
-      resolve(this.images);
-      console.log("Fim do handle upload image");
+      });
     })
   }
 
@@ -453,9 +433,6 @@ export class EditrecipePage implements OnInit {
       this.handleUploadimages(this.session.recipeid).then(() => {
         let parameters = [];
 
-        console.log("Im in save changes")
-        console.log(this.images);
-
         parameters.push(
           this.form.get('title').value,
           this.selectedDiet,
@@ -467,8 +444,7 @@ export class EditrecipePage implements OnInit {
           this.images,
           this.session.userid);
 
-        this.dbServices.updateRecipe(this.session.recipeid, parameters).then((response) => { 
-          resolve(response); })
+        this.dbServices.updateRecipe(this.session.recipeid, parameters).then((response) => { resolve(response); })
       })
     })
   }
@@ -478,8 +454,6 @@ export class EditrecipePage implements OnInit {
   ///// Handle navigate to recipepage
   navigateRecipepage() {
     this.saveChanges().then((response) => {
-      console.log(response);
-      console.log("Im navigating to recipe page");
       this.router.navigate(['recipepage', this.session.recipeid]);
     })
   }

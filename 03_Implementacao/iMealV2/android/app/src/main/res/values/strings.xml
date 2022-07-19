@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">iMealV2</string>
+    <string name="app_name">iMeal</string>
     <string name="title_activity_main">iMealV2</string>
-    <string name="package_name">com.company.iMeal</string>
-    <string name="custom_url_scheme">com.company.iMeal</string>
+    <string name="package_name">com.company.iMealV2</string>
+    <string name="custom_url_scheme">com.company.iMealV2</string>
 </resources>

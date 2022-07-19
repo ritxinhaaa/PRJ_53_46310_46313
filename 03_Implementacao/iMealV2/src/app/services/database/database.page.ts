@@ -1,6 +1,7 @@
 import { Injectable, Query } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { snapshotChanges } from '@angular/fire/compat/database';
+import { title } from 'process';
+import { identity } from 'rxjs';
 
 
 @Injectable({
@@ -25,7 +26,7 @@ export class DatabaseServices {
 
         let task = this.firestore.collection('shoppinglist').doc(userid).set({ recipes: recipes })
         .then(() => {
-          resolve(task);  
+          resolve(task);
         })
       })
     })
@@ -75,6 +76,7 @@ export class DatabaseServices {
     })
   }
 
+  // Remove recipe from specific user favorite list
   removerecipeFavorites(userid: string, recipeid: string) {
     return new Promise((resolve, reject) => {
       this.getfavoriteRecipes(userid).then((response) => {
@@ -117,6 +119,7 @@ export class DatabaseServices {
     })
   }
 
+  // Add recipe to database
   addRecipe(authorid: string, recipeInfo) {
     return new Promise((resolve, reject) => {
       let task = this.firestore.collection('recipes').add({
@@ -150,6 +153,8 @@ export class DatabaseServices {
 
   // Set recipe images
   setrecipeImages(recipeid: string, imagesUrl: Array<string>) {
+    console.log(imagesUrl);
+
     return new Promise((resolve, reject) => {
       let response = this.firestore.collection('recipes').doc(recipeid).update({ images: imagesUrl });
       resolve(response);
@@ -186,13 +191,13 @@ export class DatabaseServices {
   getRecipes(): Promise<Array<any>>{
     return new Promise((resolve, reject) => {
       this.firestore.collection('recipes').get().toPromise().then((snapshot) => {
-
+        
         let response = snapshot.docs.map(doc => {
           return {
             id: doc.id,
             title: doc.data()['title'],
             description: doc.data()['description'],
-            image: doc.data()['images'][0]
+            images: doc.data()['images'][0]
           }
         })
 
@@ -206,8 +211,7 @@ export class DatabaseServices {
   updateRecipe(recipeid: string, parameters) {
     return new Promise((resolve, reject) => {
 
-      console.log("\n Im in database")
-      console.log(parameters[7])
+      console.log("Im in database");
 
       let task = this.firestore.collection('recipes').doc(recipeid).set({
           title: parameters[0],
@@ -220,8 +224,11 @@ export class DatabaseServices {
           images: parameters[7],
           userid: parameters[8]
       }).then(() => {
-        console.log("I finished uploading");
-        resolve(task);
+        this.firestore.collection('recipes').doc(recipeid).get().toPromise().then((snapshot) => {
+          console.log(snapshot.data()['images']);
+          console.log("I finished uploading");
+          resolve(task);
+        })
       });
     })
   }
@@ -680,6 +687,7 @@ export class DatabaseServices {
   ////////////////
   //////////////// Handle comments collection ////////////////
 
+  // Add comment to database
   addComment(authorid: string, recipeid: string, comment: string) {
     return new Promise((resolve, reject) => {
       let response = this.firestore.collection('comments').doc(recipeid).collection('comment').add({
@@ -691,8 +699,7 @@ export class DatabaseServices {
     })
   }
 
-  removeComment(authorid: string, recipeid: string) {}
-
+  // Fecth all comments in specified recipe
   getComments(recipeid: string) {
     return new Promise((resolve, reject) => {
       this.firestore.collection('comments').doc(recipeid).collection('comment')
@@ -704,7 +711,6 @@ export class DatabaseServices {
               userid: doc.data()['userid']
             }
           })
-
           resolve(response);
         })
     })

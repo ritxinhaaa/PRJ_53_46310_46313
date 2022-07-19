@@ -60,7 +60,6 @@ ion-item {
 }
 
 //// CSS Class
-
 .title {
     margin-top: 3rem;
     text-align: center;
@@ -90,63 +89,33 @@ ion-item {
     font-size: smaller;
 }
 
-/*.buttons-toolbar {
-    border-radius: 10px;
-}*/
-
 .text-area {
     font-family: Abel;
-    //background-color: var(--ion-color-primary);
     vertical-align: middle;
-    //padding-left: 0.8rem;
     margin: 0.5rem 1rem 0.5rem 1rem;
-}
-
-
-//
-// comment section css
-.comment-title {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-.comment-view {
-    width: 100%;
-    height: 18rem;
-    background-color: white;
-}
-
-.comment-img {
-    padding: 5%;
-    width: 2.5rem;
-    height: 2.5rem;
-}
-
-.comment-author {
-    justify-content: start !important;
-    font-size: smaller;
-}
-
-.comment-content {
-    justify-content: start !important;
-    font-size: smaller;
-}
-
-.profilePic {
-    height: 80%; 
-    width: 80%; 
-    border-radius: 6rem !important; 
-    z-index: 2;
-    border: 2px solid var(--ion-color-primary);
-    justify-content: right !important;
-}
-
-.separator {
-    height: 0.09rem;
-    background-color: lightgrey;
-    margin: 0 1rem 0 1rem;
 }
 
 .ionicon-stroke-width {
     stroke-width: var(--ionicon-stroke-width, 15px);
+}
+
+.grid1 {
+    background-color: white;
+    margin: 0.5rem;
+    border-radius: 20px;
+    box-shadow: 0 0 0.5rem #00000030;
+}
+
+.labelIng {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-family: Abel;
+    font-size: medium;
+}
+
+.buttonRemove {
+    height: 95%;
+    margin: 0.5rem 0 0.5rem 0;
+    width: 19%;
 }

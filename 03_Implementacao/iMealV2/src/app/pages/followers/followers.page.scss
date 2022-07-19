@@ -17,7 +17,14 @@ ion-col {
 
 ion-list {
     background: var(--ion-color-primary) !important;
-    width: 100%;}
+    width: 100%;
+}
+
+img {
+    width: 90%;
+    height: 90%;
+    align-items: center;
+}
 
 //// CSS Class
 
@@ -38,4 +45,8 @@ ion-list {
     font-family: Abel;
     background-color: white;
     vertical-align: middle;
+}
+
+.title-font {
+    font-size: medium;
 }

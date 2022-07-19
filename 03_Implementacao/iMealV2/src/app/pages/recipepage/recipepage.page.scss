@@ -60,7 +60,6 @@ ion-item.ing-inst-list {
 }
 
 //// CSS Class
-
 .margin-y {
     margin-top: 2.5em;
     margin-bottom: 2.5em;
@@ -85,21 +84,15 @@ ion-item.ing-inst-list {
     font-size: smaller;
 }
 
-/*.buttons-toolbar {
-    border-radius: 10px;
-}*/
-
 .text-area {
     font-family: Abel;
     background-color: var(--ion-color-primary);
     vertical-align: middle;
-    //padding-left: 0.8rem;
     margin: 0.5rem 1rem 0.5rem 1rem;
 }
 
-
 //
-// comment section css
+// comment section scss
 .comment-title {
     margin-top: 1rem;
     margin-bottom: 1rem;

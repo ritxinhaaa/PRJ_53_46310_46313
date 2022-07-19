@@ -8,11 +8,7 @@ import { Session } from 'src/app/services/variables/variables.page';
 })
 export class ConnectPage implements OnInit {
 
-  constructor(private session: Session) {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
-  // fill() { this.session.readJson(); }
+  ngOnInit() { }
 }

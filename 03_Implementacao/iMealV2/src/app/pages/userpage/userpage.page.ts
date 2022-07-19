@@ -20,9 +20,9 @@ import { identity } from 'rxjs';
 export class UserpagePage implements OnInit {
 
   userinfo;
-  userid: string = "";
-  username: string = "";
-  useravatar: string = "";
+  userid = '';
+  username = '';
+  useravatar = '';
   userrecipes: Array<any> = [];
 
   followersList;
@@ -54,46 +54,43 @@ export class UserpagePage implements OnInit {
   // Fired when the component routing to is about to animate into view
   ionViewWillEnter() {
     this.userid = this.route.snapshot.paramMap.get('id');
-    this.isuserProfile = (this.session.userid == this.userid);
+    this.isuserProfile = (this.session.userid === this.userid);
     this.sessionStarted = this.authServices.sessionStarted;
-
-    console.log("Session is started " + this.sessionStarted);
-    console.log("Is user profile " + this.isuserProfile);
 
     // Vamos buscar a informação do utilizador
     this.dbServices.getuserInfo(this.userid).then((response) => {
       this.userinfo = response;
       this.username = response['name'];
       this.useravatar = response['profileurl'];
-    })
+    });
 
     // Vamos buscar a lista de receitas do utilizador e respetivos ratings
     this.dbServices.getuserRecipes(this.userid).then((response)=> {
       this.userrecipes = response;
 
       this.userrecipes.forEach(recipe => {
-        this.dbServices.getmedianRating(recipe['id']).then((rating) => {
-          recipe['rating'] = rating;
-        })
+        this.dbServices.getmedianRating(recipe.id).then((rating) => {
+          recipe.rating = rating;
+        });
       });
-    })
+    });
 
     // Vamos buscar a lista de followers do utilizador
     this.dbServices.getFollowers(this.userid).then((response) => {
       this.followersList = response;
       this.numFollowers = this.followersList.length;
-    })
+    });
 
     // Vamos buscar a lista de pessoas que o utilizador segue
     this.dbServices.getFollowing(this.userid).then((response) => {
       this.followingList = response;
       this.numFollowing = this.followingList.length;
-    })
+    });
 
     // Se este não é o perfil do utilizador atual, vamos verificar se está na lista de seguidores
     if(this.sessionStarted && !this.isuserProfile) {
       this.dbServices.getFollowing(this.session.userid).then((response) => {
-        let followingList = response;
+        const followingList = response;
 
         if(followingList.includes(this.userid)) {
           this.userinFollowinglist = true;
@@ -105,7 +102,7 @@ export class UserpagePage implements OnInit {
           this.showfollowBtn = true;
           this.showfollowedBtn = false;
         }
-      })
+      });
     }
   }
 
@@ -118,24 +115,20 @@ export class UserpagePage implements OnInit {
 
     // Atualizar lista de seguidores
     if(this.sessionStarted && !this.userinFollowinglist && this.followUser) {
-      console.log('[ionViewDidLeave] - Vou dar follow a este seguidor');
       this.dbServices.addFollowing(this.session.userid, this.userid);
     }
     else if(this.sessionStarted && this.userinFollowinglist && !this.followUser) {
-      console.log('[ionViewDidLeave] - Vou dar unfollow a este seguidor');
       this.dbServices.removeFollowing(this.session.userid, this.userid);
     }
   }
 
-
-  // 
+  //
   ///// Handle toggle follow button
   toggleFollow() {
     this.followUser = !this.followUser;
     this.showfollowBtn = !this.showfollowBtn;
     this.showfollowedBtn = !this.showfollowedBtn;
   }
-
 
   //
   ///// Handle image events
@@ -147,18 +140,18 @@ export class UserpagePage implements OnInit {
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos // Camera, Photos or Prompt
-    })
-    
+    });
+
     if(await image) {
       this.updatedImage = await image;
-      let dataUrl = this.updatedImage.dataUrl;
+      const dataUrl = this.updatedImage.dataUrl;
       this.previewImage(dataUrl);
     }
   }
 
   // Preview image in page
   previewImage(imgdataUrl) {
-    var userimg = document.getElementById("userimage");
+    const userimg = document.getElementById('userimage');
     userimg.setAttribute('src', imgdataUrl);
   }
 
@@ -169,33 +162,32 @@ export class UserpagePage implements OnInit {
       const fileRef = ref(getStorage(), filePath);
 
       const task = new Promise((resolve, reject)=> {
-        let base64 = image.dataUrl.split(',')[1]
+        const base64 = image.dataUrl.split(',')[1];
         resolve(uploadString(fileRef, base64, 'base64'));
       }).then((response) => {
         const downloadUrl = getDownloadURL(fileRef);
 
-        downloadUrl.then((response) => {
-          let url = response;
+        downloadUrl.then(() => {
+          const url = response;
           this.dbServices.setuserAvatar(this.session.userid, url).then((imageurl) => {
             this.session.userimage = imageurl;
             resolve(imageurl);
-          })
-        })
-      })
-    })
+          });
+        });
+      });
+    });
   }
-
 
   //
   ///// Handle log out event
   logout() {
     this.authServices.logout().then((response) => {
-      this.router.navigate(['homepage']); })
+      this.router.navigate(['homepage']); });
   }
 
   //
   ///// Handle navigation events
-  
+
   // Navigate back to homepage
   goBack() {
     // Atualizar nova imagem na base de dados caso tenha havido uma alteração
@@ -203,15 +195,17 @@ export class UserpagePage implements OnInit {
       this.uploadImage(this.updatedImage).then(() => {
         this.updatedImage == null;
         this.router.navigate(['homepage']);
-      })
+      });
     }
     else {
       this.router.navigate(['homepage']);
     }
   }
+
   // Navigate recipe page
   clickRecipe(recipeId) {
     this.router.navigate(['recipepage', recipeId]);}
+
   // Navigate followers page
   navigateFollowers(followingSection: boolean) {
     this.router.navigate(['followers', this.userid, followingSection]);}

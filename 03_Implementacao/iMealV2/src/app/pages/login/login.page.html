@@ -1,19 +1,16 @@
 <ion-content [fullscreen]="true">
   <ion-grid class="ion-text-center">
-
     <!-- row : cancel button -->
     <ion-row>
       <ion-button class="skip-button" routerLink="/connect">Cancel</ion-button>
     </ion-row>
-
   </ion-grid>
 
   <ion-grid class="ion-text-center">
-
     <!-- row : app logo --> 
     <ion-row>
       <div id="container">
-        <ion-img style="width: 50px; height: 50px;" src="assets/imgs/imeal_logo_smaller.png"></ion-img>
+        <ion-img src="assets/imgs/imeal_logo_smaller.png"></ion-img>
       </div>
     </ion-row>
 
@@ -63,27 +60,11 @@
       <ion-row class="margin-y2">
         <ion-button (click)="login()" [disabled]="!form.valid" class="button-font" shape="round" color="secondary"> login </ion-button>
       </ion-row>
-
     </form>
-
-    <!-- row : separator -->
-    <!--<ion-row>
-      <hr style="margin-right: 5%;"> <p>or</p> <hr style="margin-left: 5%;">
-    </ion-row>-->
-
-    <!-- row : google button -->
-    <!--<ion-row class="margin-y3">
-      <ion-button (click)="googleLogin()" class="button-font" style="height: 3.5em;" shape="round" color="light"> 
-        --><!-- Advanced: explicity set the icon for each platform -->
-        <!--<ion-icon style="margin-right: 4%;" ios="logo-google" md="logo-google"></ion-icon>
-        Sign-in with Google
-      </ion-button>
-    </ion-row>-->
 
     <!-- row : skip button -->
     <ion-row class="forgotButton">
       <ion-button class="forgot-button" routerLink="/forgotpassword"><h6>Forgot my password</h6></ion-button>
     </ion-row>
-
   </ion-grid>
 </ion-content>

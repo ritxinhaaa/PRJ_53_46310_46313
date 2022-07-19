@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,7 +17,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class FavoritesPage implements OnInit {
 
-  userid: string = "";
+  userid = '';
   favoriteRecipes: Array<any> = [];
   ratings: Array<number> = [];
 
@@ -29,7 +30,7 @@ export class FavoritesPage implements OnInit {
 
   ngOnInit() {}
 
-  // Fired when the component routing to is about to animate into view.  
+  // Fired when the component routing to is about to animate into view
   ionViewWillEnter() {
     this.userid = this.session.userid;
     this.favoriteRecipes = [];
@@ -45,13 +46,11 @@ export class FavoritesPage implements OnInit {
           });
         });
       });
-    })
+    });
   }
-
 
   ///// Click events
   clickRecipe(recipeId) {
     this.router.navigate(['recipepage', recipeId]);
   }
-
 }

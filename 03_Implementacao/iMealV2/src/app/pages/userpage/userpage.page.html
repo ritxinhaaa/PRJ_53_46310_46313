@@ -1,24 +1,19 @@
 <ion-content [fullscreen]="true">
-
-  <ion-grid class="ion-text-center">
-    
+  <ion-grid class="ion-text-center">    
     <!-- row : skip button -->
     <ion-row style="justify-content: start !important;">
       <ion-button class="skip-button" (click)="goBack()"><ion-icon name="close-outline"></ion-icon></ion-button>
-    </ion-row>
-  
+    </ion-row>  
   </ion-grid>
 
   <ion-grid>
-
     <!-- row : user name -->
     <ion-row>
       <h4 class="title-font">{{this.username}}</h4>
     </ion-row>
 
     <!-- row : user image -->
-    <ion-row class="ion-text-center">
-      
+    <ion-row class="ion-text-center">      
       <ion-grid>
         <!-- action buttons -->
         <ion-row *ngIf="this.sessionStarted">
@@ -36,14 +31,13 @@
         <ion-row style="margin-top: 5%;">
           <ion-avatar>
             <!-- If user has avatar show if not / show default image -->
-            <img *ngIf="this.useravatar != ''; else default_avatar;" id="userimage" [src]="this.useravatar">
+            <img *ngIf="this.useravatar !== ''; else default_avatar;" id="userimage" [src]="this.useravatar">
             <ng-template #default_avatar>
               <img style="height: 100%; width: 100%;" src="assets/imgs/default_user.png">
             </ng-template>
           </ion-avatar>
         </ion-row>
       </ion-grid>
-
     </ion-row>
 
     <!-- row : user info -->
@@ -98,8 +92,7 @@
 
     <!-- row : logout button -->
     <ion-row *ngIf="this.isuserProfile">
-      <ion-button style="width: 40%; margin-top: 5%; margin-bottom: 10%;" (click)="logout()" class="button-font" shape="round" color="secondary">Log Out</ion-button>
+      <ion-button id="logOutButton" (click)="logout()" class="button-font" shape="round" color="secondary">Log Out</ion-button>
     </ion-row>
   </ion-grid>
-
 </ion-content>

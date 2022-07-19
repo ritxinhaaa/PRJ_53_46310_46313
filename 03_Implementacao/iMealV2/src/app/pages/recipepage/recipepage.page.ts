@@ -17,37 +17,37 @@ export class RecipepagePage implements OnInit {
 
   // recipe info
   recipeinfo;
-  recipeid: string = "";
-  dietType = "";
-  title: string = "";
-  description: string = "";
-  duration: string = "";
-  portion: string = "";
+  recipeid = '';
+  dietType = '';
+  title = '';
+  description = '';
+  duration = '';
+  portion = '';
   images = [];
   ingredients = [];
   instructions = [];
 
-  authorid: string = "";
-  authoravatar: string = "";
+  authorid = '';
+  authoravatar = '';
 
   // handle go to edit page
   isAuthor = false;       // só podemos editar a receita se o utilizador que está a vistar a página for seu autor
   popoverIsOpen = false;  // popover onde se podemo ver as opções do menu
 
   // comments info
-  comment = "";
+  comment = '';
   numComments;
   recipeComments;
   recipeCommentInfo = [];
 
   // handle shoppinglist
-  addShoppinglist: boolean = false;
-  isinShoppingList: boolean = false;
-  showaddButton: boolean = false;
+  addShoppinglist = false;
+  isinShoppingList = false;
+  showaddButton = false;
 
   // handle add favorites
-  addFavorites: boolean = false;
-  recipeisFavorite: boolean = false;
+  addFavorites = false;
+  recipeisFavorite = false;
 
   // handle rating
   dbRating = 0;         // get rating stored in database if defined
@@ -55,12 +55,12 @@ export class RecipepagePage implements OnInit {
   currentRating = 0;    // get rating registered by user in page if defined
 
   // handle comments
-  showComments: boolean = false;  // wether comment view should be shown or not
+  showComments = false;  // wether comment view should be shown or not
   currentComments = [];           // store comments made by user
 
   // handle segment
-  section = "";
-  showIngredients: boolean = true;
+  section = '';
+  showIngredients = true;
 
   // Column size
   colSize = 4;
@@ -70,7 +70,7 @@ export class RecipepagePage implements OnInit {
     initialSlide: 0,
     loop: true
   };
-  
+
   constructor(
     private router: Router,
     private session: Session,
@@ -78,7 +78,7 @@ export class RecipepagePage implements OnInit {
     private firestore: AngularFirestore,
     private authServices: AuthServices,
     private dbServices: DatabaseServices) {
-      this.section = "ingredients";
+      this.section = 'ingredients';
     }
 
   ngOnInit() {
@@ -95,64 +95,63 @@ export class RecipepagePage implements OnInit {
       this.checkFavorites(this.recipeid).then((response) => {
         this.recipeisFavorite = response;
         this.addFavorites = this.recipeisFavorite;
-      })
+      });
     }
 
     // Ir buscar rating e shopping list
-    if(this.session.userid != "") {
+    if(this.session.userid !== '') {
       // Get rating
       this.dbServices.getRating(this.recipeid, this.session.userid).then((response) => {
         this.dbRating = response;
         this.currentRating = this.dbRating;
-      })
+      });
 
       // Get shopping list
       this.dbServices.getShoppinglist(this.session.userid).then((shoppinglist) => {
-        console.log(shoppinglist);
         this.isinShoppingList = shoppinglist.includes(this.recipeid);
-      })
+      });
     }
 
     // Vamos buscar a informação da receita cada vez que entramos na página
     this.dbServices.getRecipe(this.recipeid).then(response => {
       this.recipeinfo = response;
 
-      this.title = this.recipeinfo['title'];
-      this.dietType = this.recipeinfo['dietType'];
-      this.description = this.recipeinfo['description'];
-      this.duration = this.recipeinfo['duration']; 
-      this.portion = this.recipeinfo['portion'];
-      this.images = this.recipeinfo['images'];
-      this.authorid = this.recipeinfo['authorid'];
-      this.instructions = this.recipeinfo['instructions'];
+      this.title = this.recipeinfo.title;
+      this.dietType = this.recipeinfo.dietType;
+      this.description = this.recipeinfo.description;
+      this.duration = this.recipeinfo.duration;
+      this.portion = this.recipeinfo.portion;
+      this.images = this.recipeinfo.images;
+      this.authorid = this.recipeinfo.authorid;
+      this.instructions = this.recipeinfo.instructions;
+
+      this.isAuthor = (this.authorid === this.session.userid);
 
       // Get ingredients names
-      this.recipeinfo['ingredients'].forEach(element => {
+      this.recipeinfo.ingredients.forEach(element => {
 
-        let ingid = element['ingid'];
-        let ingunit = element['ingunit'];
+        const ingid = element.ingid;
+        const ingunit = element.ingunit;
 
-        this.dbServices.getingriedientInfo(ingid).then((response) =>{
-          this.ingredients.push([response['name'], ingunit]);
-        })
+        this.dbServices.getingriedientInfo(ingid).then((ingname) =>{
+          this.ingredients.push([ingname['name'], ingunit]);
+        });
       });
 
       // Get author name
       this.dbServices.getuserInfo(this.authorid).then(response => {
         this.authoravatar = response['profileurl'];
-      })
+      });
 
       // Get median rating
       this.dbServices.getmedianRating(this.recipeid).then((response) => {
         this.medianRating = response;
-      })
+      });
 
       // Update session variables
       this.session.recipeid = this.recipeid;
       this.session.recipeinfo = this.recipeinfo;
-      
-      this.isAuthor = (this.authorid == this.session.userid);
-    })
+    });
 
     // Vamos buscar a informação dos comentários cada vez que entramos na página
     this.dbServices.getComments(this.recipeid).then((response) => {
@@ -160,23 +159,23 @@ export class RecipepagePage implements OnInit {
       this.numComments = this.recipeComments.length;
     }).then(() => {
       this.recipeComments.forEach(recipeComment => {
-        let userid = recipeComment['userid'];
-        let comment = recipeComment['comment'];
+        const userid = recipeComment.userid;
+        const comment = recipeComment.comment;
 
         this.dbServices.getuserInfo(userid).then((response) => {
-          let userinfo = response;
+          const userinfo = response;
 
-          let username = userinfo['name'];
-          let userimage = userinfo['profileurl'];
+          const username = userinfo['name'];
+          const userimage = userinfo['profileurl'];
 
           this.recipeCommentInfo.push({
-            username: username,
-            userimage: userimage,
-            comment: comment
-          })
+            username,
+            userimage,
+            comment
+          });
         });
       });
-    })
+    });
   }
 
 
@@ -192,33 +191,29 @@ export class RecipepagePage implements OnInit {
     else if(this.recipeisFavorite && !this.addFavorites) {
       this.dbServices.removerecipeFavorites(userid, this.recipeid);
     }
-    
 
     // dbRating is 0 if no rating is found on database. So we use add function
-    if(this.dbRating == 0) {
-      if(this.currentRating != 0) { // if user rated recipe
+    if(this.dbRating === 0) {
+      if(this.currentRating !== 0) { // if user rated recipe
         this.dbServices.addRating(this.recipeid, this.session.userid, this.currentRating);
       }
     }
     // dbRating is != 0, means there was a value already. So we use update function
     else {
-      if(this.dbRating != this.currentRating && this.currentRating > 0) {
+      if(this.dbRating !== this.currentRating && this.currentRating > 0) {
         this.dbServices.updateRating(this.recipeid, this.session.userid, this.currentRating);
       }
     }
-
 
     // Add comment to db
     this.currentComments.forEach(comment => {
       this.dbServices.addComment( this.session.userid, this.recipeid, comment);
     });
 
-
     // Add recipe to shopping list
     if(this.addShoppinglist) {
       this.dbServices.addShoppinglist(this.session.userid, this.recipeid);
     }
-
 
     this.ingredients = [];
     this.currentComments = [];
@@ -229,14 +224,12 @@ export class RecipepagePage implements OnInit {
     this.addFavorites = !this.addFavorites;
   }
 
-  
   //
   ////// Handle shopping list function
   handleShoppinglist() {
     this.addShoppinglist = true;
-    alert("Recipe was added to your shopping list");
+    alert('Recipe was added to your shopping list');
   }
-
 
   //
   ////// Handle ratings function
@@ -244,11 +237,10 @@ export class RecipepagePage implements OnInit {
     this.currentRating = rating;
   }
 
-
-  // 
+  //
   ////// Handle comments function
   handleComment() {
-    if(this.comment != '') {
+    if(this.comment !== '') {
       this.currentComments.push(this.comment);
     }
     this.comment = '';
@@ -269,10 +261,10 @@ export class RecipepagePage implements OnInit {
           resolve(this.tmpRecipes.includes(recipeid));
         }
         else {
-          reject(false); 
+          reject(false);
         }
       });
-    })
+    });
   }
 
 
@@ -282,8 +274,8 @@ export class RecipepagePage implements OnInit {
   colorScheme2 = ['#34A853','#F5E7E0'];
 
   setinitaldesign() {
-    let button1 = document.getElementById('ing-seg');
-    let button2 = document.getElementById('inst-seg');
+    const button1 = document.getElementById('ing-seg');
+    const button2 = document.getElementById('inst-seg');
 
     button1.style.backgroundColor = this.colorScheme2[0];
     button1.style.color = this.colorScheme1[0];
@@ -292,8 +284,8 @@ export class RecipepagePage implements OnInit {
     button2.style.color = this.colorScheme1[1];
   }
   changeButtons(id1,id2) {
-    let button1 = document.getElementById(id1);
-    let button2 = document.getElementById(id2);
+    const button1 = document.getElementById(id1);
+    const button2 = document.getElementById(id2);
 
     button2.style.backgroundColor = this.colorScheme1[0];
     button2.style.color = this.colorScheme1[1];

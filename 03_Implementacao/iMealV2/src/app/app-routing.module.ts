@@ -63,10 +63,6 @@ const routes: Routes = [
   {
     path: 'shoppinglist',
     loadChildren: () => import('./pages/shoppinglist/shoppinglist.module').then( m => m.ShoppinglistPageModule)
-  },
-  {
-    path: 'fcm',
-    loadChildren: () => import('./pages/fcm/fcm.module').then( m => m.FcmPageModule)
   }
 ];
 

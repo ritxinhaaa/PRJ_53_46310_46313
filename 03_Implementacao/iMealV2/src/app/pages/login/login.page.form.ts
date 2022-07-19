@@ -8,11 +8,11 @@ export class LoginPageForm {
         this.formBuilder = formBuilder;
     }
 
-    createForm() : FormGroup {
+    createForm(): FormGroup {
         return this.formBuilder.group({
-            email: ['', [Validators.required, Validators.email]], // Validators class : Provides a set of built-in validators that can be used by form controls.
+            // Validators class: Provides a set of built-in validators that can be used by form controls
+            email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required]]
         });
     }
-
 }

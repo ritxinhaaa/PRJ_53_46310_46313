@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -22,12 +23,10 @@ describe('LoginPage', () => {
     fixture.detectChanges();
   }));
 
-  
-  it("should create form on init", () => {
+  it('should create form on init', () => {
     component.ngOnInit();
-    
     expect(component.form).not.toBeUndefined;
-  })
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

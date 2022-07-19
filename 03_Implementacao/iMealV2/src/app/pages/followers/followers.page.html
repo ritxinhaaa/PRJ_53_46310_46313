@@ -13,7 +13,7 @@
   <ion-grid class="ion-text-center">
     <ion-row>
       <ion-col>
-        <h4 style="font-size: medium;" class="title-font">{{this.username}}</h4>
+        <h4 class="title-font">{{this.username}}</h4>
       </ion-col>
     </ion-row>
 
@@ -30,12 +30,12 @@
     <!-- row : toggle ingredients / instructions -->
     <ion-row [ngSwitch]="section">
       <ion-list class="list" *ngSwitchCase="'followers'">
-        <ion-row *ngFor="let follower of followers" lines="none"
-            style="display: flex;">
+        <ion-row *ngFor="let follower of followers" lines="none" style="display: flex;">
           <ion-col size="8" (click)="navigateUserpage(follower.id)">
+
             <ion-col size="5">
               <ion-avatar> 
-                <img style="width: 90%; height: 90%; align-items: center;" src="{{follower.imageurl}}">
+                <img src="{{follower.imageurl}}">
               </ion-avatar>
             </ion-col>
             <ion-col size="7" style="justify-content: start;">
@@ -51,10 +51,9 @@
       </ion-list>
 
       <ion-list class="list" *ngSwitchCase="'following'">
-        <ion-row *ngFor="let following of followings" lines="none" (click)="navigateUserpage(following.id)"
-            style="display: flex;">
+        <ion-row *ngFor="let following of followings" lines="none" (click)="navigateUserpage(following.id)" style="display: flex;">
           <ion-col size="3">
-            <ion-avatar> <img style="width: 90%; height: 90%; align-items: center;" src="{{following.imageurl}}"> </ion-avatar>
+            <ion-avatar> <img src="{{following.imageurl}}"> </ion-avatar>
           </ion-col>
           <ion-col size="5" style="justify-content: start;">
             <h6 style="align-items: start; margin: 0; padding: 0;" class="subtitle-font margin-name">{{following.name}}</h6>

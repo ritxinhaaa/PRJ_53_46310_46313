@@ -16,46 +16,46 @@ export class ShoppinglistPage implements OnInit {
   shoppinglist = [];
   recipes = [];
 
-
   constructor(
     private router: Router,
     private session: Session,
     private dbServices: DatabaseServices,
     private renderer: Renderer2) { }
-
+  
 
   ngOnInit() {
     this.dbServices.getShoppinglist(this.session.userid).then((response) => {
+      console.log(response);
       this.shoppinglist = response;
 
       if(this.shoppinglist.length > 0) {
 
         this.shoppinglist.forEach(recipeid => {
-          this.dbServices.getRecipe(recipeid).then((response) => {
+          this.dbServices.getRecipe(recipeid).then((recipeinfo) => {
 
-            let ingredients = [];
-            let recipeings = response['ingredients'];
+            const ingredients = [];
+            const recipeings = recipeinfo['ingredients'];
 
             // Get ingredients names
             recipeings.forEach(ing => {
-              let ingid = ing['ingid'];
-              let ingunit = ing['ingunit'];
+              const ingid = ing['ingid'];
+              const ingunit = ing['ingunit'];
 
-              this.dbServices.getingriedientInfo(ingid).then((response) => {
+              this.dbServices.getingriedientInfo(ingid).then(() => {
                 ingredients.push([response['name'], ingunit]);
-              })
-            })
+              });
+            });
 
             this.recipes.push({
-              id: response['id'],
-              title: response['title'],
-              ingredients: ingredients,
-              image: response['images'][0]
-            })
-          })
+              id: recipeinfo['id'],
+              title: recipeinfo['title'],
+              ingredients,
+              image: recipeinfo['images'][0]
+            });
+          });
         });
       }
-    })
+    });
   }
 
   removeRecipe(elementid, recipeId) {
@@ -68,7 +68,6 @@ export class ShoppinglistPage implements OnInit {
 
   ///// Click events
   clickRecipe(recipeId) {
-    console.log(recipeId);
     this.router.navigate(['recipepage', recipeId]);
   }
 }

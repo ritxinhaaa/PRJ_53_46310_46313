@@ -27,55 +27,11 @@ export class Session {
   // DATABASE INFORMATION
   ingredientDatabase: Array<any> = []; // stores all ingredients in the database
 
+  
   clearUserData() {
     this.userid = "";
     this.username = "";
     this.useremail = "";
     this.userimage = "";
-  }
-
-  // NOTIFICATIONS INFORMATION
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // FILL DATABASE WITH JSNO INFO IF NEEDED
-  readJson() {
-    let data = [];
-
-    fetch('./assets/json/ingredients.json').then(res => res.json()).then(json => {
-      data = json;
-      // console.log(data);
-      const element = [];    
-
-      for (let i = 0; i < data.length; i++) {
-        element.push(data[i]['name']);
-      }
-      
-      element.forEach(element => {
-        this.dbServices.addIngredient(element);
-      });
-    });
   }
 }

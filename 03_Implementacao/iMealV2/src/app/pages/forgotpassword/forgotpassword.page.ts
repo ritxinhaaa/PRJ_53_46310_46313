@@ -12,22 +12,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./forgotpassword.page.scss'],
 })
 export class ForgotpasswordPage implements OnInit {
-  
+
   form: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private authServices: AuthServices,
-    private router: Router
-  ) { }
+    private router: Router ) { }
 
   ngOnInit() {
     this.form = new LoginPageForm(this.formBuilder).createForm();
   }
 
   resetPassword(){
-    var email = this.form.get('email').value;
+    const email = this.form.get('email').value;
     this.authServices.resetPassword(email);
   }
-
 }

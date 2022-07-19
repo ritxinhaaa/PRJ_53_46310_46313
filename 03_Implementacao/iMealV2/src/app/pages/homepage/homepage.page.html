@@ -23,7 +23,7 @@
                 placeholder="Search for a recipe"
                 [(ngModel)]="searchTerm"
                 animated></ion-searchbar>
-            <ion-icon id="filters-button" name="options" style="width: 25px; height: 25px; color: #C66358;" (click)="showIngs()"></ion-icon> <!-- (click)="addIng(true)" -->
+            <ion-icon id="filters-button" name="options" (click)="showIngs()"></ion-icon> <!-- (click)="addIng(true)" -->
             <p style="color: var(--ion-color-primary)" *ngIf="this.authServices.sessionStarted">.</p>
             <img style="width: 25px; height: 25px" src="assets/imgs/random-meal.png" (click)="randomMealGenerator()" *ngIf="this.authServices.sessionStarted">
         </ion-row>
@@ -34,8 +34,8 @@
 
                 <ion-card class="main-card" (click)="clickRecipe(recipe.id)">
                     <div class="ion-text-center card-image-blk">
-                        <img class="card-img" src="{{recipe.image}}" style="width: 6rem; height: 6rem; border-radius: 10% !important;">
-                    </div> 
+                        <img class="card-img" src="{{recipe.images}}">
+                    </div>
 
                     <ion-card-header style="padding-top: 2.5em;">
                         <ion-card-title class="card-title subtitle-font">{{recipe.title}}</ion-card-title>
@@ -113,7 +113,7 @@
                         <ion-row style="display: flex; justify-content: center; margin-top: 3rem;">
                             <ion-card class="random-meal-card" (click)="clickRecipe(randomMeal.id)" *ngIf="!this.showImage" style="margin-left: 25%;">
                                 <div class="ion-text-center card-image-blk">
-                                    <img class="card-img" src="{{randomMeal.image}}" style="width: 6rem; height: 6rem; border-radius: 10% !important;">
+                                    <img class="card-img" src="{{randomMeal.images}}">
                                 </div> 
                                 <ion-card-header style="padding-top: 2.5em;">
                                     <ion-card-title class="card-title subtitle-font">{{randomMeal.title}}</ion-card-title>

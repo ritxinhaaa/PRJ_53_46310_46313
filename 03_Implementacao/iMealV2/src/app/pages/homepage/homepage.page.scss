@@ -30,7 +30,6 @@ ion-col {
 
 ion-card {
     width: 10rem;
-    //width: 157px;
     height: 12rem;
     padding: 5px;
     border-radius: 20px;
@@ -75,7 +74,6 @@ hr {
 }
 
 //// CSS Class
-
 .input-title {
     margin-left: 20%;
     font-family: Abel;
@@ -101,10 +99,19 @@ hr {
 
 .card-title {
     font-size: medium;
+    height: 1.3em; 
+    line-height: 1.3em;
+    overflow: hidden;
 }
 
 .card-content {
     font-size: small;
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
 }
 
 .skip-button {
@@ -131,8 +138,7 @@ hr {
 }
 
 // ->>>
-// ->>> Random meal generator css
-
+// ->>> Random meal generator scss
 .random-title {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -148,8 +154,7 @@ hr {
 }
 
 // ->>>
-// ->>> Diet type css
-
+// ->>> Diet type scss
 .diet-row {
     justify-content:flex-start;
     flex-wrap:nowrap;
@@ -167,8 +172,7 @@ hr {
 }
 
 // ->>>
-// ->>> Ingredient filter css
-
+// ->>> Ingredient filter scss
 .container {
     padding: 3%;
     width: 80%;
@@ -183,6 +187,9 @@ hr {
 
 .card-img {
     max-width:100px;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 10% !important;
 }
 
 .card-main-content {
@@ -194,4 +201,10 @@ hr {
     --border-color: transparent;
     margin-bottom: -30px;
     margin-top: -30px;
+}
+
+#filters-button {
+    width: 25px;
+    height: 25px;
+    color: #C66358;
 }

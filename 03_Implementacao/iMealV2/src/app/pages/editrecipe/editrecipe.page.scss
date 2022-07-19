@@ -39,12 +39,11 @@ figcaption {
 //// CSS Class
 
 .diet-row {
-    //width:auto;
-    justify-content:flex-start; // changed
+    justify-content:flex-start;
     flex-wrap:nowrap;
     overflow-x: scroll;
     overflow-y:hidden;
-    //white-space: nowrap; 
+    width: 350px;
 }
 
 .diet-row ion.col {

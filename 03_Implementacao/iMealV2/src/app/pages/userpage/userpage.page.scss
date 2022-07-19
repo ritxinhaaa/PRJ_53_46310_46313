@@ -11,7 +11,6 @@ ion-row {
 
 ion-card {
     width: 10rem;
-    //width: 157px;
     height: 12rem;
     padding: 5px;
     border-radius: 20px;
@@ -29,7 +28,6 @@ ion-card.main-card {
     border-radius: 30px;
     max-width: 500px;
     overflow: visible;
-    //margin-top: 80px;
     margin-bottom:2.5em;
 }
 
@@ -42,10 +40,19 @@ ion-card.main-card {
 
 .card-title {
     font-size: medium;
+    height: 1.3em; 
+    line-height: 1.3em;
+    overflow: hidden;
 }
 
 .card-content {
     font-size: small;
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
 }
 
 .skip-button {
@@ -86,4 +93,13 @@ ion-card.main-card {
     background-color: #34A853;
     border-radius: 50%;
     padding: 20%;
+}
+
+#logOutButton {
+    width: 40%;
+    margin-top: 5%;
+    margin-bottom: 10%;
+    position: fixed;
+    bottom: 0;
+    box-shadow: 1rem 1rem 4rem #00000030;
 }

@@ -16,7 +16,7 @@ import { Session } from 'src/app/services/variables/variables.page';
 
 export class HomepagePage implements OnInit {
 
-  useravatar = "";
+  useravatar = '';
   searchTerm;
   filtersModal;
 
@@ -26,10 +26,7 @@ export class HomepagePage implements OnInit {
   // Handle show modal
   showModal = false;
 
-  footerChoice = "footer";    // [footer, filter, randomMeal]
-  //showFilters = false;
-  //showRandomMeal: boolean = false;
-
+  footerChoice = 'footer';    // [footer, filter, randomMeal]
   // Handle random meal generator
   randomMeal: Array<any> = [];
 
@@ -37,7 +34,7 @@ export class HomepagePage implements OnInit {
   dietTypes = ['Vegan','Gluten-free','Vegetarian','Keto','General']; // armazena todos os tipos de dietas
   ingredientDatabase: Array<any>;                                    // armazena todos os ingredientes na base de dados
 
-  choosenIngredient = "";       // armazena o ingrediente que está atualmente no input de pesquisa
+  choosenIngredient = '';       // armazena o ingrediente que está atualmente no input de pesquisa
   searchIngredients = [];       // armazena os ids dos ingredientes que o utilizador está a pesquisar
   searchIngredientsName = [];   // armaznea os nomes dos ingredientes que o utilizador está a pesquisar
   exclusiveSearch = false;      // indica se a pesquisa por ingredientes é exclusiva
@@ -46,20 +43,19 @@ export class HomepagePage implements OnInit {
   inputIng;
 
   // Handle show user profile image
-  private showImage; 
+  private showImage;
 
   constructor(
     private session: Session,
     private renderer: Renderer2,
+    private firestore: AngularFirestore,
     private authServices: AuthServices,   // os authservices são usados no HTML
     private dbServices: DatabaseServices, // os databaseServices são usados no HTML
     private router: Router) { }
-  
-  ngOnInit() {
-    this.filtersModal = document.getElementById("filtersModal") as HTMLIonModalElement;
-    this.ingredientDatabase = this.session.ingredientDatabase;
 
-    console.log(this.ingredientDatabase);
+  ngOnInit() {
+    this.filtersModal = document.getElementById('filtersModal') as HTMLIonModalElement;
+    this.ingredientDatabase = this.session.ingredientDatabase;
   }
 
   ionViewWillEnter() {
@@ -67,9 +63,9 @@ export class HomepagePage implements OnInit {
 
     this.dbServices.getRecipes().then((response) => {
       this.recipes = response;
-      
+
       this.recipes.forEach(recipe => {
-        this.dbServices.getmedianRating(recipe.id).then((response) => {
+        this.dbServices.getmedianRating(recipe.id).then(() => {
           recipe.rating = response;
         })
       })
@@ -82,16 +78,16 @@ export class HomepagePage implements OnInit {
   dietFilter = "";
 
   selectedDiet(diet) {
-    let oldSelection = this.dietFilter;
+    const oldSelection = this.dietFilter;
     this.dietFilter = diet;
 
-    if(oldSelection != ""){
-      const oldFig = document.getElementById("img"+oldSelection);
-      this.renderer.removeClass(oldFig, "selected-diet");
+    if(oldSelection !== ''){
+      const oldFig = document.getElementById('img'+oldSelection);
+      this.renderer.removeClass(oldFig, 'selected-diet');
     }
 
-    const figure = document.getElementById("img"+this.dietFilter);
-    this.renderer.addClass(figure, "selected-diet");
+    const figure = document.getElementById('img'+this.dietFilter);
+    this.renderer.addClass(figure, 'selected-diet');
   }
 
 
@@ -100,42 +96,37 @@ export class HomepagePage implements OnInit {
   setValue(inputid) {
     const input = document.getElementById(inputid);
 
-    let id = this.choosenIngredient;
-    let name = "";
+    const id = this.choosenIngredient;
+    let name = '';
 
     this.ingredientDatabase.forEach(element => {
       if(element.id === id){
         name = element.name;
       }
     });
-
-    input.setAttribute("value", name);
+    input.setAttribute('value', name);
   }
 
   // Adiciona o ingrediente ao bloco quando o modal é "ligado"
-  //
-  // - precisamos de realizar este passo porque quando
   showIngs() {
-    console.log(this.footerChoice);
-    this.footerChoice = (this.footerChoice == "filter") ? 'footer' : 'filter';
-    console.log(this.footerChoice);
+    this.footerChoice = (this.footerChoice === 'filter') ? 'footer' : 'filter';
 
     // Criar novo bloco com o nome do ingrediente
-    const div = document.getElementById("ing-container");
+    const div = document.getElementById('ing-container');
 
     // Criar um <p> novo para cada ingrediente que existe na lista
     this.searchIngredients.forEach(ingid => {
       const idx = this.searchIngredients.indexOf(ingid,0);
       const ingname = this.searchIngredientsName[idx];
 
-      const p = document.createElement("p"); // document.getElementById("template").cloneNode();
-      this.renderer.removeAttribute(p, "hidden");
-      this.renderer.addClass(p, "ing-block");
+      const p = document.createElement('p'); // document.getElementById("template").cloneNode();
+      this.renderer.removeAttribute(p, 'hidden');
+      this.renderer.addClass(p, 'ing-block');
       p.textContent = ingname;
 
-      const cross = document.createElement("ion-icon");
-      cross.setAttribute("name","close");
-      cross.addEventListener("click", () => {
+      const cross = document.createElement('ion-icon');
+      cross.setAttribute('name','close');
+      cross.addEventListener('click', () => {
         this.searchIngredients.splice(idx,1);
         this.searchIngredientsName.splice(idx,1);
         div.removeChild(p);
@@ -145,45 +136,46 @@ export class HomepagePage implements OnInit {
       div.appendChild(p);
     });
   }
+
   // Adiciona o ingrediente ao bloco onde o utilizador vê os ingredientes que já selecionou
   addIng() {
     // Adicionar ingrediente a uma lista (get igredient name and id)
     const ingid = this.choosenIngredient;
-    let ingname = "";
+    let ingname = '';
 
     if(ingid != null) {
 
       // if ingredient was already added
-      if(this.searchIngredients.includes(ingid)) return;
+      if(this.searchIngredients.includes(ingid)) {return;}
 
       this.ingredientDatabase.forEach(element => {
         if(element.id === ingid){
           ingname = element.name;
         }
       });
-  
+
       this.searchIngredients.push(ingid);
       this.searchIngredientsName.push(ingname);
       const idx = this.searchIngredients.indexOf(ingid,0);
-  
+
       // Criar novo bloco com o nome do ingrediente
-      const div = document.getElementById("ing-container");
-  
-      const p = document.getElementById("template").cloneNode();
-      this.renderer.removeAttribute(p, "hidden");
+      const div = document.getElementById('ing-container');
+
+      const p = document.getElementById('template').cloneNode();
+      this.renderer.removeAttribute(p, 'hidden');
       p.textContent = ingname;
-  
-      const cross = document.createElement("ion-icon");
-      cross.setAttribute("name","close");
-      cross.addEventListener("click", () => {
+
+      const cross = document.createElement('ion-icon');
+      cross.setAttribute('name','close');
+      cross.addEventListener('click', () => {
         this.searchIngredients.splice(idx,1);
         this.searchIngredientsName.splice(idx,1);
         div.removeChild(p);
       });
-  
+
       p.appendChild(cross);
       div.appendChild(p);
-  
+
       this.inputIng = document.getElementById('ingredient');
       this.inputIng.value = '';
     }
@@ -197,21 +189,18 @@ export class HomepagePage implements OnInit {
     this.dbServices.getRecipesByFilter(this.searchIngredients, this.dietFilter, this.exclusiveSearch)
     .then((response) => {
       this.recipes = response;
-      console.log("Estou no applyFilter");
-      console.log(this.recipes);
-    })
-
+    });
   }
 
   //
   ///// Handle clear filters
   clearFilter() {
     this.searchIngredients = [];
-    this.dietFilter = "";
+    this.dietFilter = '';
 
     this.dbServices.getRecipes().then((response) => {
       this.recipes = response;
-    })
+    });
   }
 
 
@@ -221,29 +210,28 @@ export class HomepagePage implements OnInit {
     this.dbServices.getRecipes().then((response) => {
       this.recipes = response;
     });
-  
+
     const messages = [];
     for(let i = 0; i < this.recipes.length; i++){
       messages[i] = this.recipes[i];
     }
-  
+
     const randIndex = Math.floor(Math.random() * messages.length); // Get random index
     this.randomMeal = messages[randIndex];
-  
-    this.footerChoice = (this.footerChoice == "randomMeal") ? 'footer' : 'randomMeal';
-    
+
+    this.footerChoice = (this.footerChoice === 'randomMeal') ? 'footer' : 'randomMeal';
+
     this.showImage = true;
-  
+
     setTimeout(()=>{
       this.showImage = false;
     }, 3000);
   }
 
-
   //
   ///// Handle modal events
   dismissModal() {
-    this.footerChoice = "footer";
+    this.footerChoice = 'footer';
   }
 
   //
@@ -254,9 +242,7 @@ export class HomepagePage implements OnInit {
 
   clickExclusiveSearch(e) {
     this.exclusiveSearch = !this.exclusiveSearch;
-    console.log(this.exclusiveSearch);
   }
-
 
   //
   ///// Navigate to userpage

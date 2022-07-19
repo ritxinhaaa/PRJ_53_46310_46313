@@ -25,30 +25,23 @@ export class RegisterPage implements OnInit {
   }
 
   checkPassword(): boolean{
-    let password = this.form.get('password').value;
-    let confirmPassword = this.form.get('confirmPassword').value;
-
-    console.log(password);
-    console.log(confirmPassword);
-    console.log(password.length >= 6);
-
-    return (password == confirmPassword && password.length >= 6);
+    const password = this.form.get('password').value;
+    const confirmPassword = this.form.get('confirmPassword').value;
+    return (password === confirmPassword && password.length >= 6);
   }
 
   register() {
-    let name = this.form.get('name').value;
-    let email = this.form.get('email').value;
-    let password = this.form.get('password').value;
+    const name = this.form.get('name').value;
+    const email = this.form.get('email').value;
+    const password = this.form.get('password').value;
 
     this.authServices.register(name, email, password).then(() => {
-      console.log("I registered you ;)");
       this.router.navigate(['login']);
-    })
+    });
   }
 
   checkForm(){
     // retorna true se o form for válido e se a password for válida
-    console.log("Form is " + this.form.valid + " Check password is " + this.checkPassword());
     return this.form.valid && this.checkPassword();
   }
 }
